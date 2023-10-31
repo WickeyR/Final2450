@@ -12,31 +12,29 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.IOException;
-import java.util.Stack;
-
 public class Main extends Application {
+    //To track current photo
     private int photoNum = 0;
     // The Quote that will be updated every 10 seconds
-    private Label quoteLabel = new Label("Invest with Wisdom, Grow with Purpose");
+    private final Label quoteLabel = new Label("Invest with Wisdom, Grow with Purpose");
 
     // The Button that goes along with the change
-    private Button actionButton = new Button("");
+    private final Button actionButton = new Button("");
 
-    private ImageView imageView = new ImageView();
+    private final ImageView imageView = new ImageView();
     StackPane imageContainer = new StackPane();
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
+        // Loads first image
+        updateUI();
 
         // To make the menu bar at the top and adds styles
-        updateUI();
         MenuBar topBar = new MenuBar();
 
         Menu logoMenu = new Menu("Berkshire Hathaway");
@@ -56,7 +54,7 @@ public class Main extends Application {
         topBar.setPadding(new Insets(7, 15, 7, 15));
 
 
-        // Adds shadow effect
+        // Adds shadow effect to text and button
         DropShadow shadow = new DropShadow();
         shadow.setRadius(7);
         shadow.setOffsetX(4);
@@ -73,28 +71,15 @@ public class Main extends Application {
         quoteAndButtonBox.setSpacing(10);
 
         // The container of the image, button, and quote
-
         imageContainer.setPrefHeight(800);
         imageContainer.getChildren().addAll( imageView, quoteAndButtonBox);
 
-        // The root vbox with all the elements
-
-        StackPane rootImage = new StackPane();
-        rootImage.getChildren().setAll(imageContainer, topBar);
-        rootImage.setMaxSize(800,400);
-        rootImage.setMinSize(800,400);
+        // Contains Updated Image and Menu Bar
+        StackPane rootImageContainer = new StackPane();
+        rootImageContainer.getChildren().setAll(imageContainer, topBar);
+        rootImageContainer.setMaxSize(800,400);
+        rootImageContainer.setMinSize(800,400);
         topBar.setStyle("-fx-background-color: rgba(60,60,60, 0.4);");
-
-
-
-
-
-
-
-        VBox rootBox = new VBox(rootImage);
-        rootImage.setAlignment(Pos.TOP_CENTER);
-        rootBox.setFillWidth(true);
-
 
 
         //Sets the styling for the Quote label
@@ -105,22 +90,17 @@ public class Main extends Application {
         actionButton.borderProperty().set(null);
 
         // To Change properties when hovering
-        actionButton.setOnMouseEntered(event ->{
-            actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'black'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'white'; -fx-background-color: 'black' ; -fx-font-size: 15; ");
-
-        });
+        actionButton.setOnMouseEntered(event -> actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'black'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'white'; -fx-background-color: 'black' ; -fx-font-size: 15; "));
         // To revert to normal when not hovered
-        actionButton.setOnMouseExited(event ->{
-
-            actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'white'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'black'; -fx-background-color: 'white' ;");
+        actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'white'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'black'; -fx-background-color: 'white' ;"));
 
 
-        });
+        // Contains all other boxes
+        VBox rootBox = new VBox(rootImageContainer);
+        rootImageContainer.setAlignment(Pos.TOP_CENTER);
+        rootBox.setFillWidth(true);
 
-
-
-
-        Scene scene = new Scene(rootBox, 800, 400);
+        Scene scene = new Scene(rootBox, 800, 800);
         scene.getStylesheets().add("data:, " +
                 ".menu-bar .label {" +
                 "-fx-text-fill: white;" +
@@ -130,9 +110,7 @@ public class Main extends Application {
 
 
         // Create a KeyFrame with a duration of 10 seconds
-        KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(10), event -> {
-            updateUI();
-        });
+        KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(10), event -> updateUI());
 
 
         // Create a Timeline with the KeyFrame and set it to repeat indefinitely
@@ -152,30 +130,30 @@ public class Main extends Application {
     }
 
     private void updateUI() {
-        // Allows imgaes to fade out
+        // Allows images to fade out
         FadeTransition fadeAnimation = new FadeTransition(Duration.millis(2000), imageContainer);
         fadeAnimation.setFromValue(1.0);
         fadeAnimation.setToValue(0);
 
         switch (photoNum) {
-            case 0:
-                Image image1 = new Image("warren.png" );
+            case 0 -> {
+                Image image1 = new Image("warren.png");
                 setBackgroundImage(image1);
                 quoteLabel.setText("Read Warren Buffets Annual Letter");
                 actionButton.setText("Click Here");
-                break;
-            case 1:
-                Image image2 = new Image("PicB.png" );
+            }
+            case 1 -> {
+                Image image2 = new Image("PicB.png");
                 setBackgroundImage(image2);
                 quoteLabel.setText("Invest with Wisdom, Grow with Purpose");
                 actionButton.setText("Invest With Us");
-                break;
-            case 2:
-                Image image3 = new Image("PicC.png" );
+            }
+            case 2 -> {
+                Image image3 = new Image("PicC.png");
                 setBackgroundImage(image3);
                 quoteLabel.setText("Text 3");
                 actionButton.setText("This is button three");
-                break;
+            }
         }
 
         if (photoNum >= 3) {
