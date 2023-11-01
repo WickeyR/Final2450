@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
 public class Main extends Application {
     //To track current photo
     private int photoNum = 0;
@@ -94,20 +95,60 @@ public class Main extends Application {
         // To revert to normal when not hovered
         actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'white'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'black'; -fx-background-color: 'white' ;"));
 
+        // For all items on page after imageContainer
+
+
+        Label imporantTaglineLabel = new Label("Read Updates from Berkshire Hathaway");
+
+        // Creates stack panes to serve as buttons the users can press to go to other pages
+        StackPane annualReportPane = new StackPane();
+        annualReportPane.setMinSize(175,100);
+        annualReportPane.setMaxSize(175,100);
+        annualReportPane.setStyle("-fx-background-color: 'black' ");
+
+        StackPane sustainabilityPane = new StackPane();
+        sustainabilityPane.setMinSize(175,100);
+        sustainabilityPane.setMaxSize(175,100);
+        sustainabilityPane.setStyle("-fx-background-color: 'black' ");
+
+
+        StackPane annualMeetingPane = new StackPane();
+        annualMeetingPane.setMinSize(175,100);
+        annualMeetingPane.setMaxSize(175,100);
+        annualMeetingPane.setStyle("-fx-background-color: 'black' ");
+
+        StackPane stockHolderInformationPane = new StackPane();
+        stockHolderInformationPane.setMinSize(175,100);
+        stockHolderInformationPane.setMaxSize(175,100);
+        stockHolderInformationPane.setStyle("-fx-background-color: 'black' ");
+
+        // Sets spacing and styling for pane HBox
+        HBox imagePanelContainer = new HBox(annualReportPane, sustainabilityPane, annualMeetingPane, stockHolderInformationPane);
+        imagePanelContainer.setSpacing(10);
+
+
+
+
+
+
+        VBox importantInformationPanel = new VBox(imporantTaglineLabel, imagePanelContainer);
+        importantInformationPanel.setSpacing(10);
+        importantInformationPanel.setPadding(new Insets(25, 0, 0, 25));
+
+
+
 
         // Contains all other boxes
-        VBox rootBox = new VBox(rootImageContainer);
+        VBox rootBox = new VBox(rootImageContainer , importantInformationPanel);
         rootImageContainer.setAlignment(Pos.TOP_CENTER);
         rootBox.setFillWidth(true);
 
+        rootBox.setSpacing(10);
         Scene scene = new Scene(rootBox, 800, 800);
         scene.getStylesheets().add("data:, " +
                 ".menu-bar .label {" +
                 "-fx-text-fill: white;" +
                 "}");
-
-
-
 
         // Create a KeyFrame with a duration of 10 seconds
         KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(10), event -> updateUI());
@@ -137,19 +178,19 @@ public class Main extends Application {
 
         switch (photoNum) {
             case 0 -> {
-                Image image1 = new Image("warren.png");
+                Image image1 = new Image("HeadlineImages/warren.png");
                 setBackgroundImage(image1);
                 quoteLabel.setText("Read Warren Buffets Annual Letter");
                 actionButton.setText("Click Here");
             }
             case 1 -> {
-                Image image2 = new Image("PicB.png");
+                Image image2 = new Image("HeadlineImages/PicB.png");
                 setBackgroundImage(image2);
                 quoteLabel.setText("Invest with Wisdom, Grow with Purpose");
                 actionButton.setText("Invest With Us");
             }
             case 2 -> {
-                Image image3 = new Image("PicC.png");
+                Image image3 = new Image("HeadlineImages/PicC.png");
                 setBackgroundImage(image3);
                 quoteLabel.setText("Text 3");
                 actionButton.setText("This is button three");
