@@ -18,10 +18,15 @@ import javafx.util.Duration;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.Stack;
 
 
 public class Main extends Application {
+
+
+    private final StackPane annualReportPane = new StackPane();
+     private final StackPane sustainabilityPane = new StackPane();
+     private final StackPane annualMeetingPane = new StackPane();
+    private final StackPane stockHolderInformationPane = new StackPane();
     //To track current photo
     private int photoNum = 0;
     // The Quote that will be updated every 10 seconds
@@ -103,43 +108,12 @@ public class Main extends Application {
 
         Label imporantTaglineLabel = new Label("Read Updates from Berkshire Hathaway");
 
-        // Creates stack panes to serve as buttons the users can press to go to other pages
-        StackPane annualReportPane = new StackPane();
-        annualReportPane.setMinSize(175,100);
-        annualReportPane.setMaxSize(175,100);
-        annualReportPane.setStyle("-fx-background-color: 'black' ");
+        // Calls function to set styling and functionality of stackPanes in "Updates"
+        setUpdatesPaneStyling();
 
-        StackPane sustainabilityPane = new StackPane();
-        sustainabilityPane.setMinSize(175,100);
-        sustainabilityPane.setMaxSize(175,100);
-        sustainabilityPane.setStyle("-fx-background-color: 'black' ");
-
-
-        StackPane annualMeetingPane = new StackPane();
-        annualMeetingPane.setMinSize(175,100);
-        annualMeetingPane.setMaxSize(175,100);
-        annualMeetingPane.setStyle("-fx-background-color: 'black' ");
-
-        StackPane stockHolderInformationPane = new StackPane();
-        stockHolderInformationPane.setMinSize(175,100);
-        stockHolderInformationPane.setMaxSize(175,100);
-        stockHolderInformationPane.setStyle("-fx-background-color: 'black' ");
-
-        // Sets spacing and styling for pane HBox
+        // Places update panes into HBox for styling
         HBox imagePanelContainer = new HBox(annualReportPane, sustainabilityPane, annualMeetingPane, stockHolderInformationPane);
         imagePanelContainer.setSpacing(10);
-
-        // Sets action to scale size when hovered over
-        annualReportPane.setOnMouseEntered(e -> scaleButton(annualReportPane));
-        sustainabilityPane.setOnMouseEntered(e -> scaleButton(sustainabilityPane));
-        annualMeetingPane.setOnMouseEntered(e -> scaleButton(annualMeetingPane));
-        stockHolderInformationPane.setOnMouseEntered(e -> scaleButton(stockHolderInformationPane));
-
-        // Sets action when button exited
-        annualReportPane.setOnMouseExited(e -> descaleButton(annualReportPane));
-        sustainabilityPane.setOnMouseExited(e -> descaleButton(sustainabilityPane));
-        annualMeetingPane.setOnMouseExited(e -> descaleButton(annualMeetingPane));
-        stockHolderInformationPane.setOnMouseExited(e -> descaleButton(stockHolderInformationPane));
 
 
 
@@ -191,19 +165,19 @@ public class Main extends Application {
         switch (photoNum) {
             case 0 -> {
                 Image image1 = new Image("HeadlineImages/warren.png");
-                setBackgroundImage(image1);
+                setBackgroundImage(imageContainer, image1);
                 quoteLabel.setText("Read Warren Buffets Annual Letter");
                 actionButton.setText("Click Here");
             }
             case 1 -> {
                 Image image2 = new Image("HeadlineImages/PicB.png");
-                setBackgroundImage(image2);
+                setBackgroundImage(imageContainer, image2);
                 quoteLabel.setText("Invest with Wisdom, Grow with Purpose");
                 actionButton.setText("Invest With Us");
             }
             case 2 -> {
                 Image image3 = new Image("HeadlineImages/PicC.png");
-                setBackgroundImage(image3);
+                setBackgroundImage(imageContainer, image3);
                 quoteLabel.setText("Text 3");
                 actionButton.setText("This is button three");
             }
@@ -219,16 +193,18 @@ public class Main extends Application {
         fadeAnimation.play();
     }
 
-  private void setBackgroundImage(Image image) {
-      BackgroundImage backgroundImage = new BackgroundImage(image,
-              BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-              BackgroundPosition.DEFAULT,
-              BackgroundSize.DEFAULT);
-      Background background = new Background(backgroundImage);
-      imageContainer.setBackground(background);
-  }
+    private void setBackgroundImage(StackPane pane, Image image) {
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                backgroundSize);
+        Background background = new Background(backgroundImage);
+        pane.setBackground(background);
+    }
 
-  public void scaleButton(StackPane button){
+
+    public void scaleButton(StackPane button){
         button.setScaleX(1.1);
         button.setScaleY(1.1);
         button.setCursor(Cursor.HAND);
@@ -237,6 +213,45 @@ public class Main extends Application {
       button.setScaleX(1.0);
       button.setScaleY(1.0);
       button.setCursor(Cursor.DEFAULT);
+
+  }
+
+  public void setUpdatesPaneStyling(){
+      annualReportPane.setMinSize(175,100);
+      annualReportPane.setMaxSize(175,100);
+      annualReportPane.setStyle("-fx-background-color: 'black' ");
+      annualReportPane.setOnMouseEntered(e -> scaleButton(annualReportPane));
+      annualReportPane.setOnMouseExited(e -> descaleButton(annualReportPane));
+      setBackgroundImage(annualReportPane, new Image("importantUpdatesImages/newsReports.png"));
+
+
+      sustainabilityPane.setMinSize(175,100);
+      sustainabilityPane.setMaxSize(175,100);
+      sustainabilityPane.setStyle("-fx-background-color: 'black' ");
+      sustainabilityPane.setOnMouseEntered(e -> scaleButton(sustainabilityPane));
+      sustainabilityPane.setOnMouseExited(e -> descaleButton(sustainabilityPane));
+      setBackgroundImage(sustainabilityPane, new Image("importantUpdatesImages/sustainablility.png"));
+
+
+      annualMeetingPane.setMinSize(175,100);
+      annualMeetingPane.setMaxSize(175,100);
+      annualMeetingPane.setStyle("-fx-background-color: 'black' ");
+      annualMeetingPane.setOnMouseEntered(e -> scaleButton(annualMeetingPane));
+      annualMeetingPane.setOnMouseExited(e -> descaleButton(annualMeetingPane));
+      setBackgroundImage(annualMeetingPane, new Image("importantUpdatesImages/AnnualMeetings (1).png"));
+
+
+
+      stockHolderInformationPane.setMinSize(175,100);
+      stockHolderInformationPane.setMaxSize(175,100);
+      stockHolderInformationPane.setStyle("-fx-background-color: 'black' ");
+      stockHolderInformationPane.setOnMouseEntered(e -> scaleButton(stockHolderInformationPane));
+      stockHolderInformationPane.setOnMouseExited(e -> descaleButton(stockHolderInformationPane));
+      setBackgroundImage(stockHolderInformationPane, new Image("importantUpdatesImages/StockHolderInformation.png"));
+
+
+
+
 
   }
 }
