@@ -4,6 +4,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Stack;
 
 
 public class Main extends Application {
@@ -91,7 +94,7 @@ public class Main extends Application {
         actionButton.borderProperty().set(null);
 
         // To Change properties when hovering
-        actionButton.setOnMouseEntered(event -> actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'black'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'white'; -fx-background-color: 'black' ; -fx-font-size: 15; "));
+        actionButton.setOnMouseEntered(event ->  actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'black'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'white'; -fx-background-color: 'black' ; -fx-font-size: 15; "));
         // To revert to normal when not hovered
         actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'white'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'black'; -fx-background-color: 'white' ;"));
 
@@ -126,14 +129,23 @@ public class Main extends Application {
         HBox imagePanelContainer = new HBox(annualReportPane, sustainabilityPane, annualMeetingPane, stockHolderInformationPane);
         imagePanelContainer.setSpacing(10);
 
+        // Sets action to scale size when hovered over
+        annualReportPane.setOnMouseEntered(e -> scaleButton(annualReportPane));
+        sustainabilityPane.setOnMouseEntered(e -> scaleButton(sustainabilityPane));
+        annualMeetingPane.setOnMouseEntered(e -> scaleButton(annualMeetingPane));
+        stockHolderInformationPane.setOnMouseEntered(e -> scaleButton(stockHolderInformationPane));
 
-
+        // Sets action when button exited
+        annualReportPane.setOnMouseExited(e -> descaleButton(annualReportPane));
+        sustainabilityPane.setOnMouseExited(e -> descaleButton(sustainabilityPane));
+        annualMeetingPane.setOnMouseExited(e -> descaleButton(annualMeetingPane));
+        stockHolderInformationPane.setOnMouseExited(e -> descaleButton(stockHolderInformationPane));
 
 
 
         VBox importantInformationPanel = new VBox(imporantTaglineLabel, imagePanelContainer);
         importantInformationPanel.setSpacing(10);
-        importantInformationPanel.setPadding(new Insets(25, 0, 0, 25));
+        importantInformationPanel.setPadding(new Insets(30, 0, 0, 30));
 
 
 
@@ -197,8 +209,8 @@ public class Main extends Application {
             }
         }
 
-        if (photoNum >= 3) {
-            photoNum = 1;
+        if (photoNum >= 2) {
+            photoNum = 0;
         } else {
             photoNum++;
         }
@@ -214,5 +226,17 @@ public class Main extends Application {
               BackgroundSize.DEFAULT);
       Background background = new Background(backgroundImage);
       imageContainer.setBackground(background);
+  }
+
+  public void scaleButton(StackPane button){
+        button.setScaleX(1.1);
+        button.setScaleY(1.1);
+        button.setCursor(Cursor.HAND);
+  }
+  public void descaleButton(StackPane button){
+      button.setScaleX(1.0);
+      button.setScaleY(1.0);
+      button.setCursor(Cursor.DEFAULT);
+
   }
 }
