@@ -1,40 +1,21 @@
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.Cursor;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.scene.control.MenuBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 
 public class Main extends Application {
 
+    private final Label currentPageLabel = new Label("Page: 0");
 
-    private final StackPane annualReportPane = new StackPane();
-    private final StackPane sustainabilityPane = new StackPane();
-    private final StackPane annualMeetingPane = new StackPane();
-    private final StackPane stockHolderInformationPane = new StackPane();
-    Label anualReportLabel = new Label("News Reports");
-    Label sustainabilityLabel = new Label("Our Path to Sustainability");
-    Label annualMeetingLabel = new Label("Annual Meeting Information");
-    Label stockHolderLabel = new Label("Stock Holder Information");
-
-    VBox newsReportsBox = new VBox(annualReportPane, anualReportLabel);
-    VBox sustainabilityBox = new VBox(sustainabilityPane, sustainabilityLabel);
-    VBox annualMeetingBox = new VBox(annualMeetingPane, annualMeetingLabel);
-    VBox stockHolderBox = new VBox(stockHolderInformationPane, stockHolderLabel);
-    //To track current photo
     private int photoNum = 0;
     // The Quote that will be updated every 10 seconds
     private final Label quoteLabel = new Label("Invest with Wisdom, Grow with Purpose");
@@ -110,17 +91,15 @@ public class Main extends Application {
 
         Label imporantTaglineLabel = new Label("Read Updates from Berkshire Hathaway");
         imporantTaglineLabel.setStyle("-fx-font-size: 15; -fx-underline: true;");
-        // Calls function to set styling and functionality of stackPanes in "Updates"
 
-        formatInformationPaneBox(newsReportsBox);
-        formatInformationPaneBox(sustainabilityBox);
-        formatInformationPaneBox(annualMeetingBox);
-        formatInformationPaneBox(stockHolderBox);
-        // Places update panes into HBox for styling
-        HBox imagePanelContainer = new HBox(newsReportsBox, sustainabilityBox, annualMeetingBox, stockHolderBox);
+        ImageButtonPanels newsBox = new ImageButtonPanels("News Reports", new Image("importantUpdatesImages/newsReports.png"));
+        ImageButtonPanels sustainabilityPanel = new ImageButtonPanels("Our Path to Sustainability", new Image("importantUpdatesImages/sustain.png"));
+        ImageButtonPanels meetingsPanel = new ImageButtonPanels("Annual Meeting Information", new Image("importantUpdatesImages/AnnualMeetings (1).png"));
+        ImageButtonPanels stockHolderPanel = new ImageButtonPanels("Stock Holder Information", new Image("importantUpdatesImages/StockHolderInformation.png"));
 
+        HBox imagePanelContainer = new HBox(newsBox, sustainabilityPanel, meetingsPanel, stockHolderPanel);
         imagePanelContainer.setSpacing(10);
-        setUpdatesPaneStyling();
+
 
         VBox containerText = new VBox(imagePanelContainer);
 
@@ -139,13 +118,24 @@ public class Main extends Application {
 
 
 
+        // Sets the styling for the pdfViewer buttons
+        Button previousButton = new Button("prev");
+        Button nextButton = new Button("next");
+        HBox changePageButtonsBox = new HBox(previousButton, currentPageLabel, nextButton);
+        changePageButtonsBox.setSpacing(15);
+        changePageButtonsBox.setAlignment(Pos.CENTER);
 
 
 
 
+
+
+        VBox pdfViewerBox = new VBox(changePageButtonsBox);
+        pdfViewerBox.setAlignment(Pos.CENTER);
+        pdfViewerBox.setPadding(new Insets(25, 10, 10, 25));
 
         // Contains all other boxes
-        VBox rootBox = new VBox(rootImageContainer , importantInformationPanel);
+        VBox rootBox = new VBox(rootImageContainer , importantInformationPanel, pdfViewerBox);
         rootImageContainer.setAlignment(Pos.TOP_CENTER);
         rootBox.setFillWidth(true);
 
@@ -221,58 +211,4 @@ public class Main extends Application {
         pane.setBackground(new Background(backgroundImage));
     }
 
-    private void setUpdateImage(StackPane pane, Image image){
-        ImageView imageView = new ImageView(image);
-        
-        imageView.fitWidthProperty().bind(pane.widthProperty());
-        imageView.fitHeightProperty().bind(pane.heightProperty());
-
-        // Preserve the image's aspect ratio
-        imageView.setPreserveRatio(true);
-
-        // Add the ImageView to the pane
-        pane.getChildren().add(imageView);
-    }
-    public void scaleButton(VBox box){
-        box.setScaleX(1.1);
-        box.setScaleY(1.1);
-        box.setCursor(Cursor.HAND);
-  }
-  public void descaleButton(VBox box){
-      box.setScaleX(1.0);
-      box.setScaleY(1.0);
-      box.setCursor(Cursor.DEFAULT);
-  }
-
-  public void setUpdatesPaneStyling(){
-      annualReportPane.setMinSize(175,120);
-      annualReportPane.setMaxSize(175,120);
-      annualReportPane.setStyle("-fx-background-color: 'black';");
-      setUpdateImage(annualReportPane, new Image("importantUpdatesImages/newsReports.png"));
-
-      sustainabilityPane.setMinSize(175,120);
-      sustainabilityPane.setMaxSize(175,120);
-      sustainabilityPane.setStyle("-fx-background-color: 'black' ");
-      setUpdateImage(sustainabilityPane, new Image("importantUpdatesImages/sustainablility.png"));
-
-      annualMeetingPane.setMinSize(175,120);
-      annualMeetingPane.setMaxSize(175,120);
-      annualMeetingPane.setStyle("-fx-background-color: 'black' ");
-      setUpdateImage(annualMeetingPane, new Image("importantUpdatesImages/AnnualMeetings (1).png"));
-
-      stockHolderInformationPane.setMinSize(175,120);
-      stockHolderInformationPane.setMaxSize(175,120);
-      stockHolderInformationPane.setStyle("-fx-background-color: 'black' ");
-      setUpdateImage(stockHolderInformationPane, new Image("importantUpdatesImages/StockHolderInformation.png"));
-  }
-
-  public void formatInformationPaneBox(VBox box){
-        box.setAlignment(Pos.CENTER);
-        box.setStyle("-fx-font-size: 13; -fx-border-color: grey; -fx-border-width: 3px; -fx-background-color: rgb(165, 165, 165)");
-        box.setSpacing(7.5);
-        box.setOnMouseEntered(event -> scaleButton(box));
-        box.setOnMouseExited(event -> descaleButton(box));
-
-
-  }
 }
