@@ -1,7 +1,6 @@
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.*;
-import javafx.scene.Cursor;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.MenuBar;
@@ -13,26 +12,20 @@ import javafx.util.Duration;
 import javafx.scene.image.*;
 
 public class Main extends Application {
-
-    Label currentArticleBox  = new Label("News Reports");
-
-
+    HBox currentArticleCategoryBox = new HBox();
+    Label currentArticleCategoryLabel  = new Label("News Reports");
     private final Label currentPageLabel = new Label("Page: 0");
-
     private int photoNum = 0;
     // The Quote that will be updated every 10 seconds
     private final Label quoteLabel = new Label("Invest with Wisdom, Grow with Purpose");
 
     // The Button that goes along with the change
     private final Button actionButton = new Button("");
-
     StackPane imageContainer = new StackPane();
-
     @Override
     public void start(Stage stage) {
         // Loads first image
         updateUI();
-
         // To make the menu bar at the top and adds styles
         MenuBar topBar = new MenuBar();
 
@@ -95,14 +88,13 @@ public class Main extends Application {
         Label imporantTaglineLabel = new Label("Read Updates from Berkshire Hathaway");
         imporantTaglineLabel.setStyle("-fx-font-size: 15; -fx-underline: true;");
 
-        ImageButtonPanels newsBox = new ImageButtonPanels("News Reports", new Image("importantUpdatesImages/newsReports.png"));
-        ImageButtonPanels sustainabilityPanel = new ImageButtonPanels("Our Path to Sustainability", new Image("importantUpdatesImages/sustain.png"));
-        ImageButtonPanels meetingsPanel = new ImageButtonPanels("Annual Meeting Information", new Image("importantUpdatesImages/AnnualMeetings (1).png"));
-        ImageButtonPanels stockHolderPanel = new ImageButtonPanels("Stock Holder Information", new Image("importantUpdatesImages/StockHolderInformation.png"));
+        PanelButtons newsPanel = new PanelButtons("News Reports", new Image("PanelButtonThumnails/newsReports.png"), 1);
+        PanelButtons sustainabilityPanel = new PanelButtons("Our Path to Sustainability", new Image("PanelButtonThumnails/sustain.png"), 2);
+        PanelButtons meetingsPanel = new PanelButtons("Annual Meeting Information", new Image("PanelButtonThumnails/AnnualMeetings (1).png"), 3);
+        PanelButtons stockHolderPanel = new PanelButtons("Stock Holder Information", new Image("PanelButtonThumnails/StockHolderInformation.png"),4 );
 
-        HBox imagePanelContainer = new HBox(newsBox, sustainabilityPanel, meetingsPanel, stockHolderPanel);
+        HBox imagePanelContainer = new HBox(newsPanel, sustainabilityPanel, meetingsPanel, stockHolderPanel);
         imagePanelContainer.setSpacing(10);
-
 
         VBox containerText = new VBox(imagePanelContainer);
 
@@ -110,61 +102,32 @@ public class Main extends Application {
         importantInformationPanel.setSpacing(12.5);
         importantInformationPanel.setPadding(new Insets(30, 0, 15, 30));
 
+        currentArticleCategoryBox.setSpacing(60);
+        currentArticleCategoryBox.setMinSize(680,60);
+        currentArticleCategoryBox.setMaxSize(680,60);
 
-        PDFLinks article1 = new PDFLinks("Third Quarter Earnings", "November 4, 2023", "ArticleImages/NewsArticles/Nov4News");
-        PDFLinks article2 = new PDFLinks("Third Quarter Earnings Release", "November 2, 2023", "ArticleImages/NewsArticles/Nov2News");
-        PDFLinks article3 = new PDFLinks("Second Quarter Earnigns", "August 5, 2023", "ArticleImages/NewsArticles/Aug5News");
-        PDFLinks article4 = new PDFLinks("News Release", "June 21, 2023", "ArticleImages/NewsArticles/Aug3News");
-
-        HBox articleBoxLinks = new HBox(article1, article2, article3, article4);
-        articleBoxLinks.setSpacing(60);
-        articleBoxLinks.setMinSize(750,60);
-        articleBoxLinks.setMaxSize(750,60);
-
-        currentArticleBox.setStyle("-fx-underline:true; -fx-font-size: 15;");
-        VBox articleBox = new VBox(currentArticleBox, articleBoxLinks);
+        currentArticleCategoryLabel.setStyle("-fx-underline:true; -fx-font-size: 15;");
+        VBox articleBox = new VBox(currentArticleCategoryLabel, currentArticleCategoryBox);
         articleBox.setPadding(new Insets(0,50,0,50));
         articleBox.setStyle("-fx-border-color: grey; -fx-border-width: 2px;");
 
 
-        newsBox.setOnMouseClicked(event -> {
-                    currentArticleBox.setText("News Reports");
-                    PDFLinks firstArticle = new PDFLinks("Third Quarter Earnings", "November 4, 2023", "ArticleImages/NewsArticles/Nov4News");
-                    PDFLinks secondArticle = new PDFLinks("Third Quarter Earnings Release", "November 2, 2023", "ArticleImages/NewsArticles/Nov2News");
-                    PDFLinks thirdArticle = new PDFLinks("Second Quarter Earnigns", "August 5, 2023", "ArticleImages/NewsArticles/Aug5News");
-                    PDFLinks fourthArticle = new PDFLinks("News Release", "June 21, 2023", "ArticleImages/NewsArticles/Aug3News");
-                    articleBoxLinks.getChildren().clear();
-                    articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
-                });
-//        sustainabilityPanel.setOnMouseClicked(event ->{
-//            currentArticleBox.setText("Sustainability Reports");
-//            PDFLinks firstArticle = new PDFLinks("This Is the Second", "November 4, 2023");
-//            PDFLinks secondArticle = new PDFLinks("This is the third", "November 2, 2023");
-//            PDFLinks thirdArticle = new PDFLinks("This is the fourth", "August 5, 2023");
-//            PDFLinks fourthArticle = new PDFLinks("This is the first", "June 21, 2023");
-//            articleBoxLinks.getChildren().clear();
-//            articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
-//        });
-//        meetingsPanel.setOnMouseClicked(event -> {
-//            currentArticleBox.setText("Annual Reports");
-//            PDFLinks firstArticle = new PDFLinks("Fourth Quarter Report",  "2023");
-//            PDFLinks secondArticle = new PDFLinks("Third Quarter Report", "2023");
-//            PDFLinks thirdArticle = new PDFLinks("Second Quarter Report", "2023");
-//            PDFLinks fourthArticle = new PDFLinks("First Quarter Report", "2023");
-//            articleBoxLinks.getChildren().clear();
-//            articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
-//        });
-//        stockHolderPanel.setOnMouseClicked(event -> {
-//            currentArticleBox.setText("Stock Holder Information");
-//            PDFLinks firstArticle = new PDFLinks("Common Stock Information",  "2023");
-//            PDFLinks secondArticle = new PDFLinks("Comparitive Rights", "2023");
-//            PDFLinks thirdArticle = new PDFLinks("Energy Presentation", "2022");
-//            PDFLinks fourthArticle = new PDFLinks("Facts Regarding Investments", "2021");
-//            articleBoxLinks.getChildren().clear();
-//            articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
-//        });
-
-
+        newsPanel.setOnMouseClicked(event -> {
+            currentArticleCategoryLabel.setText("News Reports");
+            newsPanel.setArticleNames(currentArticleCategoryBox);
+        });
+        sustainabilityPanel.setOnMouseClicked(event ->{
+            currentArticleCategoryLabel.setText("Sustainability Reports");
+            sustainabilityPanel.setArticleNames(currentArticleCategoryBox);
+        });
+        meetingsPanel.setOnMouseClicked(event -> {
+            currentArticleCategoryLabel.setText("Meeting Reports");
+            meetingsPanel.setArticleNames(currentArticleCategoryBox);
+        });
+        stockHolderPanel.setOnMouseClicked(event -> {
+            currentArticleCategoryLabel.setText("Stock Holder Reports");
+            stockHolderPanel.setArticleNames(currentArticleCategoryBox);
+        });
 
 
         // Contains all other boxes
@@ -210,19 +173,19 @@ public class Main extends Application {
 
         switch (photoNum) {
             case 0 -> {
-                Image image1 = new Image("HeadlineImages/warren.png");
+                Image image1 = new Image("FadingHeadlineImages/warren.png");
                 setBackgroundImage(imageContainer, image1);
                 quoteLabel.setText("Read Warren Buffets Annual Letter");
                 actionButton.setText("Click Here");
             }
             case 1 -> {
-                Image image2 = new Image("HeadlineImages/PicB.png");
+                Image image2 = new Image("FadingHeadlineImages/PicB.png");
                 setBackgroundImage(imageContainer, image2);
                 quoteLabel.setText("Invest with Wisdom, Grow with Purpose");
                 actionButton.setText("Invest With Us");
             }
             case 2 -> {
-                Image image3 = new Image("HeadlineImages/PicC.png");
+                Image image3 = new Image("FadingHeadlineImages/PicC.png");
                 setBackgroundImage(imageContainer, image3);
                 quoteLabel.setText("Read our Quarterly Reports");
                 actionButton.setText("Click Here");

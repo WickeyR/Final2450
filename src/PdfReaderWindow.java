@@ -15,9 +15,9 @@ import javafx.stage.Screen;
 import java.io.File;
 import java.util.ArrayList;
 
-public class PdfWindow {
+public class PdfReaderWindow {
 
-    private ArrayList<Image> images = new ArrayList<>();
+    private final ArrayList<Image> images = new ArrayList<>();
     private int currentIndex = 0;
     private final Label currentPageLabel = new Label("Page: 1");
 

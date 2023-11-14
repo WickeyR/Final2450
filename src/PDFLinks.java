@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class PDFLinks extends HBox {
-    PdfWindow window = new PdfWindow();
+    PdfReaderWindow window = new PdfReaderWindow();
 
     public PDFLinks(String articleName, String date, String directoryName) {
         Label articleLabel = new Label(articleName);
@@ -40,11 +40,7 @@ public class PDFLinks extends HBox {
         });
 
 
-        articleLabel.setOnMouseClicked(event -> {
-            window.openNewWindow(directoryName);
-        });
-        dateLabel.setOnMouseClicked(event -> {
-            window.openNewWindow(directoryName);
-        });
+        articleLabel.setOnMouseClicked(event -> window.openNewWindow(directoryName));
+        dateLabel.setOnMouseClicked(event -> window.openNewWindow(directoryName));
     }
 }
