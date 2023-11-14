@@ -14,6 +14,9 @@ import javafx.scene.image.*;
 
 public class Main extends Application {
 
+    Label currentArticleBox  = new Label("News Reports");
+
+
     private final Label currentPageLabel = new Label("Page: 0");
 
     private int photoNum = 0;
@@ -45,9 +48,9 @@ public class Main extends Application {
                 "                                                " +
                 "                                                " +
                 "                                           ");
+        emptySpacing.setDisable(true);
         topBar.getMenus().addAll(logoMenu,emptySpacing, contactUsMenu);
         topBar.setPadding(new Insets(7, 15, 7, 15));
-
 
         // Adds shadow effect to text and button
         DropShadow shadow = new DropShadow();
@@ -105,49 +108,83 @@ public class Main extends Application {
 
         VBox importantInformationPanel = new VBox(imporantTaglineLabel, containerText);
         importantInformationPanel.setSpacing(12.5);
-        importantInformationPanel.setPadding(new Insets(30, 0, 0, 30));
-
-        //TODO:  add functionality under page where when user clicks on panel, the contents load. Default is news panel
+        importantInformationPanel.setPadding(new Insets(30, 0, 15, 30));
 
 
+        PDFLinks article1 = new PDFLinks("Third Quarter Earnings", "November 4, 2023", "ArticleImages/NewsArticles/Nov4News");
+        PDFLinks article2 = new PDFLinks("Third Quarter Earnings Release", "November 2, 2023", "ArticleImages/NewsArticles/Nov2News");
+        PDFLinks article3 = new PDFLinks("Second Quarter Earnigns", "August 5, 2023", "ArticleImages/NewsArticles/Aug5News");
+        PDFLinks article4 = new PDFLinks("News Release", "June 21, 2023", "ArticleImages/NewsArticles/Aug3News");
+
+        HBox articleBoxLinks = new HBox(article1, article2, article3, article4);
+        articleBoxLinks.setSpacing(60);
+        articleBoxLinks.setMinSize(750,60);
+        articleBoxLinks.setMaxSize(750,60);
+
+        currentArticleBox.setStyle("-fx-underline:true; -fx-font-size: 15;");
+        VBox articleBox = new VBox(currentArticleBox, articleBoxLinks);
+        articleBox.setPadding(new Insets(0,50,0,50));
+        articleBox.setStyle("-fx-border-color: grey; -fx-border-width: 2px;");
+
+
+        newsBox.setOnMouseClicked(event -> {
+                    currentArticleBox.setText("News Reports");
+                    PDFLinks firstArticle = new PDFLinks("Third Quarter Earnings", "November 4, 2023", "ArticleImages/NewsArticles/Nov4News");
+                    PDFLinks secondArticle = new PDFLinks("Third Quarter Earnings Release", "November 2, 2023", "ArticleImages/NewsArticles/Nov2News");
+                    PDFLinks thirdArticle = new PDFLinks("Second Quarter Earnigns", "August 5, 2023", "ArticleImages/NewsArticles/Aug5News");
+                    PDFLinks fourthArticle = new PDFLinks("News Release", "June 21, 2023", "ArticleImages/NewsArticles/Aug3News");
+                    articleBoxLinks.getChildren().clear();
+                    articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
+                });
+//        sustainabilityPanel.setOnMouseClicked(event ->{
+//            currentArticleBox.setText("Sustainability Reports");
+//            PDFLinks firstArticle = new PDFLinks("This Is the Second", "November 4, 2023");
+//            PDFLinks secondArticle = new PDFLinks("This is the third", "November 2, 2023");
+//            PDFLinks thirdArticle = new PDFLinks("This is the fourth", "August 5, 2023");
+//            PDFLinks fourthArticle = new PDFLinks("This is the first", "June 21, 2023");
+//            articleBoxLinks.getChildren().clear();
+//            articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
+//        });
+//        meetingsPanel.setOnMouseClicked(event -> {
+//            currentArticleBox.setText("Annual Reports");
+//            PDFLinks firstArticle = new PDFLinks("Fourth Quarter Report",  "2023");
+//            PDFLinks secondArticle = new PDFLinks("Third Quarter Report", "2023");
+//            PDFLinks thirdArticle = new PDFLinks("Second Quarter Report", "2023");
+//            PDFLinks fourthArticle = new PDFLinks("First Quarter Report", "2023");
+//            articleBoxLinks.getChildren().clear();
+//            articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
+//        });
+//        stockHolderPanel.setOnMouseClicked(event -> {
+//            currentArticleBox.setText("Stock Holder Information");
+//            PDFLinks firstArticle = new PDFLinks("Common Stock Information",  "2023");
+//            PDFLinks secondArticle = new PDFLinks("Comparitive Rights", "2023");
+//            PDFLinks thirdArticle = new PDFLinks("Energy Presentation", "2022");
+//            PDFLinks fourthArticle = new PDFLinks("Facts Regarding Investments", "2021");
+//            articleBoxLinks.getChildren().clear();
+//            articleBoxLinks.getChildren().addAll(firstArticle, secondArticle, thirdArticle, fourthArticle);
+//        });
 
 
 
-
-
-
-
-
-        // Sets the styling for the pdfViewer buttons
-        Button previousButton = new Button("prev");
-        Button nextButton = new Button("next");
-        HBox changePageButtonsBox = new HBox(previousButton, currentPageLabel, nextButton);
-        changePageButtonsBox.setSpacing(15);
-        changePageButtonsBox.setAlignment(Pos.CENTER);
-
-
-
-
-
-
-        VBox pdfViewerBox = new VBox(changePageButtonsBox);
-        pdfViewerBox.setAlignment(Pos.CENTER);
-        pdfViewerBox.setPadding(new Insets(25, 10, 10, 25));
 
         // Contains all other boxes
-        VBox rootBox = new VBox(rootImageContainer , importantInformationPanel, pdfViewerBox);
+        VBox rootBox = new VBox(rootImageContainer , importantInformationPanel, articleBox);
         rootImageContainer.setAlignment(Pos.TOP_CENTER);
         rootBox.setFillWidth(true);
+        ScrollPane pane = new ScrollPane();
+        pane.setContent(rootBox);
+        pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         rootBox.setSpacing(10);
-        Scene scene = new Scene(rootBox, 800, 800);
+        Scene scene = new Scene(pane, 802, 810);
         scene.getStylesheets().add("data:, " +
                 ".menu-bar .label {" +
                 "-fx-text-fill: white;" +
                 "}");
 
         // Create a KeyFrame with a duration of 10 seconds
-        KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(10), event -> updateUI());
+        KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(7), event -> updateUI());
 
         // Create a Timeline with the KeyFrame and set it to repeat indefinitely
         Timeline tenSecondCycle = new Timeline(tenSecondKeyFrame);
@@ -167,9 +204,9 @@ public class Main extends Application {
 
     private void updateUI() {
         // Allows images to fade out
-        FadeTransition fadeAnimation = new FadeTransition(Duration.millis(2000), imageContainer);
+        FadeTransition fadeAnimation = new FadeTransition(Duration.millis(500), imageContainer);
         fadeAnimation.setFromValue(1.0);
-        fadeAnimation.setToValue(0);
+        fadeAnimation.setToValue(.5);
 
         switch (photoNum) {
             case 0 -> {
