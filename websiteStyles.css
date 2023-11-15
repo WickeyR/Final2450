@@ -1,0 +1,55 @@
+.root {
+	-fx-background-color: #A1D9F9;
+}
+
+.menu-bar .label {
+	-fx-font-size: 14;
+	-fx-text-fill: white;
+}
+
+.top-bar {
+	-fx-background-color: rgba(60,60,60, 0.4);
+}
+
+.quote-label {
+	-fx-background-color: rgba(60,60,60, 0.1);
+	-fx-text-fill: white;
+	-fx-underline: true;
+	-fx-font-size: 25;
+}
+
+.action-button {
+	-fx-border-width: 2;
+	-fx-border-color: white;
+	-fx-border-radius: 20;
+	-fx-background-radius: 20;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-text-fill: black;
+	-fx-background-color: white;
+	-fx-font-size: 14;
+}
+
+.action-button:hover {
+    -fx-border-width: 2;
+    -fx-border-color: white;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-font-size: 14;
+    
+}
+
+.important-tagline-label {
+    -fx-font-size: 15;
+    -fx-underline: true;
+}
+
+.article-box {
+	-fx-translate-y: 5;
+    -fx-border-color: grey;
+    -fx-border-width: 2px;
+}
