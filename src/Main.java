@@ -30,17 +30,17 @@ public class Main extends Application {
         MenuBar topBar = new MenuBar();
 
         Menu logoMenu = new Menu("Berkshire Hathaway");
-        logoMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
+        //logoMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
+        logoMenu.getStyleClass().add("menu-bar-label");
 
         Menu contactUsMenu = new Menu("Contact Us");
-        contactUsMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
-
+        //contactUsMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
+        contactUsMenu.getStyleClass().add("menu-bar-label");
+        
         // Used to serve as spacing between Two menu items
-        Menu emptySpacing = new Menu("      " +
-                "                                                " +
-                "                                                " +
-                "                                                " +
-                "                                           ");
+        Menu emptySpacing = new Menu("                                                   " +
+                "                                                                         " +
+                "                                                    ");
         emptySpacing.setDisable(true);
         topBar.getMenus().addAll(logoMenu,emptySpacing, contactUsMenu);
         topBar.setPadding(new Insets(7, 15, 7, 15));
@@ -70,23 +70,23 @@ public class Main extends Application {
         rootImageContainer.getChildren().setAll(imageContainer, topBar);
         rootImageContainer.setMaxSize(800,400);
         rootImageContainer.setMinSize(800,400);
-        topBar.setStyle("-fx-background-color: rgba(60,60,60, 0.4);");
+        topBar.getStyleClass().add("top-bar");
 
 
         //Sets the styling for the Quote label
-        quoteLabel.setStyle("-fx-text-fill: 'white'; -fx-underline: true; -fx-font-size: 25;  ");
+        quoteLabel.getStyleClass().add("quote-label");
 
         //Sets the styling for the actionButton
-        actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'white'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'black'; -fx-background-color: 'white' ;");
+        actionButton.getStyleClass().add("action-button");
         actionButton.borderProperty().set(null);
 
         // To Change properties when hovering
-        actionButton.setOnMouseEntered(event ->  actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'black'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'white'; -fx-background-color: 'black' ; -fx-font-size: 15; "));
+        actionButton.setOnMouseEntered(event ->  actionButton.getStyleClass().add("action-button:hover"));
         // To revert to normal when not hovered
-        actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-width: 2; -fx-border-color: 'white'; -fx-border-radius: 20; -fx-background-radius: 20; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: 'black'; -fx-background-color: 'white' ;"));
+        actionButton.setOnMouseExited(event -> actionButton.getStyleClass().add("action-button"));
 
         Label imporantTaglineLabel = new Label("Read Updates from Berkshire Hathaway");
-        imporantTaglineLabel.setStyle("-fx-font-size: 15; -fx-underline: true;");
+        imporantTaglineLabel.getStyleClass().add("important-tagline-label");
 
         PanelButtons newsPanel = new PanelButtons("News Reports", new Image("PanelButtonThumnails/newsReports.png"), 1);
         PanelButtons sustainabilityPanel = new PanelButtons("Our Path to Sustainability", new Image("PanelButtonThumnails/sustain.png"), 2);
@@ -106,10 +106,10 @@ public class Main extends Application {
         currentArticleCategoryBox.setMinSize(680,60);
         currentArticleCategoryBox.setMaxSize(680,60);
 
-        currentArticleCategoryLabel.setStyle("-fx-underline:true; -fx-font-size: 15;");
+        currentArticleCategoryLabel.getStyleClass().add("article-box");
         VBox articleBox = new VBox(currentArticleCategoryLabel, currentArticleCategoryBox);
         articleBox.setPadding(new Insets(0,50,0,50));
-        articleBox.setStyle("-fx-border-color: grey; -fx-border-width: 2px;");
+        articleBox.getStyleClass().add("article-box");
 
 
         newsPanel.setOnMouseClicked(event -> {
@@ -141,10 +141,7 @@ public class Main extends Application {
 
         rootBox.setSpacing(10);
         Scene scene = new Scene(pane, 802, 810);
-        scene.getStylesheets().add("data:, " +
-                ".menu-bar .label {" +
-                "-fx-text-fill: white;" +
-                "}");
+        scene.getStylesheets().add("websiteStyles.css");
 
         // Create a KeyFrame with a duration of 10 seconds
         KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(7), event -> updateUI());
@@ -165,8 +162,12 @@ public class Main extends Application {
         launch();
     }
 
+
+
+
     private void updateUI() {
         // Allows images to fade out
+        HBox box = new HBox();
         FadeTransition fadeAnimation = new FadeTransition(Duration.millis(500), imageContainer);
         fadeAnimation.setFromValue(1.0);
         fadeAnimation.setToValue(.5);
@@ -191,7 +192,6 @@ public class Main extends Application {
                 actionButton.setText("Click Here");
             }
         }
-
         if (photoNum >= 2) {
             photoNum = 0;
         } else {
