@@ -13,6 +13,7 @@ import javafx.scene.image.*;
 
 public class Main extends Application {
     HBox currentArticleCategoryBox = new HBox();
+    GridPane currentArticlesPane;
     Label currentArticleCategoryLabel  = new Label("News Reports");
     private final Label currentPageLabel = new Label("Page: 0");
     private int photoNum = 0;
@@ -40,7 +41,7 @@ public class Main extends Application {
         // Used to serve as spacing between Two menu items
         Menu emptySpacing = new Menu("                                                   " +
                 "                                                                         " +
-                "                                                    ");
+                "                                                         ");
         emptySpacing.setDisable(true);
         topBar.getMenus().addAll(logoMenu,emptySpacing, contactUsMenu);
         topBar.setPadding(new Insets(7, 15, 7, 15));
@@ -85,61 +86,50 @@ public class Main extends Application {
         // To revert to normal when not hovered
         actionButton.setOnMouseExited(event -> actionButton.getStyleClass().add("action-button"));
 
-        Label imporantTaglineLabel = new Label("Read Updates from Berkshire Hathaway");
-        imporantTaglineLabel.getStyleClass().add("important-tagline-label");
-
-        PanelButtons newsPanel = new PanelButtons("News Reports", new Image("PanelButtonThumnails/newsReports.png"), 1);
-        PanelButtons sustainabilityPanel = new PanelButtons("Our Path to Sustainability", new Image("PanelButtonThumnails/sustain.png"), 2);
-        PanelButtons meetingsPanel = new PanelButtons("Annual Meeting Information", new Image("PanelButtonThumnails/AnnualMeetings (1).png"), 3);
-        PanelButtons stockHolderPanel = new PanelButtons("Stock Holder Information", new Image("PanelButtonThumnails/StockHolderInformation.png"),4 );
-
-        HBox imagePanelContainer = new HBox(newsPanel, sustainabilityPanel, meetingsPanel, stockHolderPanel);
-        imagePanelContainer.setSpacing(10);
-
-        VBox containerText = new VBox(imagePanelContainer);
-
-        VBox importantInformationPanel = new VBox(imporantTaglineLabel, containerText);
-        importantInformationPanel.setSpacing(12.5);
-        importantInformationPanel.setPadding(new Insets(30, 0, 15, 30));
-
-        currentArticleCategoryBox.setSpacing(60);
-        currentArticleCategoryBox.setMinSize(680,60);
-        currentArticleCategoryBox.setMaxSize(680,60);
-
-        currentArticleCategoryLabel.getStyleClass().add("article-box");
-        VBox articleBox = new VBox(currentArticleCategoryLabel, currentArticleCategoryBox);
-        articleBox.setPadding(new Insets(0,50,0,50));
-        articleBox.getStyleClass().add("article-box");
 
 
-        newsPanel.setOnMouseClicked(event -> {
-            currentArticleCategoryLabel.setText("News Reports");
-            newsPanel.setArticleNames(currentArticleCategoryBox);
-        });
-        sustainabilityPanel.setOnMouseClicked(event ->{
-            currentArticleCategoryLabel.setText("Sustainability Reports");
-            sustainabilityPanel.setArticleNames(currentArticleCategoryBox);
-        });
-        meetingsPanel.setOnMouseClicked(event -> {
-            currentArticleCategoryLabel.setText("Meeting Reports");
-            meetingsPanel.setArticleNames(currentArticleCategoryBox);
-        });
-        stockHolderPanel.setOnMouseClicked(event -> {
-            currentArticleCategoryLabel.setText("Stock Holder Reports");
-            stockHolderPanel.setArticleNames(currentArticleCategoryBox);
-        });
+        Label newsLabel = new Label("News");
+        setCategoryLabelStyling(newsLabel);
+        Label sustainabilityLabel = new Label("Sustainability");
+        setCategoryLabelStyling(sustainabilityLabel);
+        Label meetingsLabel = new Label("Meeting Reports");
+        setCategoryLabelStyling(meetingsLabel);
+        Label stockHolderLabel = new Label("Stock Holder Info");
+        setCategoryLabelStyling(stockHolderLabel);
+
+        HBox articleCaterogiesList = new HBox(newsLabel, sustainabilityLabel, meetingsLabel, stockHolderLabel);
+        articleCaterogiesList.setAlignment(Pos.CENTER);
+        articleCaterogiesList.setSpacing(20);
+        ArticleSection container = new ArticleSection(1);
+
+         currentArticlesPane = container.getGridPane();
+
+        VBox articleSectionOfPage = new VBox(articleCaterogiesList, currentArticlesPane);
+        articleSectionOfPage.setAlignment(Pos.CENTER);
+        articleCaterogiesList.setAlignment(Pos.CENTER);
+        articleSectionOfPage.setSpacing(10);
+
+
+
+
+
+
+
+
+
 
 
         // Contains all other boxes
-        VBox rootBox = new VBox(rootImageContainer , importantInformationPanel, articleBox);
+        VBox rootBox = new VBox(rootImageContainer, articleSectionOfPage);
         rootImageContainer.setAlignment(Pos.TOP_CENTER);
+        currentArticlesPane.setAlignment(Pos.CENTER);
         rootBox.setFillWidth(true);
         ScrollPane pane = new ScrollPane();
         pane.setContent(rootBox);
         pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        rootBox.setSpacing(10);
+        rootBox.setSpacing(20);
         Scene scene = new Scene(pane, 802, 810);
         scene.getStylesheets().add("websiteStyles.css");
 
@@ -166,8 +156,6 @@ public class Main extends Application {
 
 
     private void updateUI() {
-        // Allows images to fade out
-        HBox box = new HBox();
         FadeTransition fadeAnimation = new FadeTransition(Duration.millis(500), imageContainer);
         fadeAnimation.setFromValue(1.0);
         fadeAnimation.setToValue(.5);
@@ -209,6 +197,14 @@ public class Main extends Application {
                 BackgroundPosition.CENTER,
                 backgroundSize);
         pane.setBackground(new Background(backgroundImage));
+    }
+
+    private void setCategoryLabelStyling(Label categoryLabel){
+        categoryLabel.setStyle("-fx-font-size: 15; ");
+
+        categoryLabel.setOnMouseEntered(event -> categoryLabel.setStyle("-fx-font-size:18; -fx-font-weight:bold;"));
+        categoryLabel.setOnMouseExited(event -> categoryLabel.setStyle("-fx-font-size:15;"));
+
     }
 
 }

@@ -9,6 +9,8 @@ import javafx.scene.image.*;
 
 public class PanelButtons extends StackPane {
 
+    PdfReaderWindow window = new PdfReaderWindow();
+
     private final int panelNum;
     /*
     @PARAM labelText: sets the label text of panel
