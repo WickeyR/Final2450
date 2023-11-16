@@ -111,6 +111,7 @@ public class Main extends Application {
 
         //TODO: Add seperateor line between articles and about ceo
 
+        //Changes made to file
 
         // Section about berskrhire Hathaway in HBox for Photo, Vbox for label and paragraph
 
