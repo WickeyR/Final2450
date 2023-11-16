@@ -48,8 +48,8 @@ public class PdfReaderWindow {
         pane.setFitToWidth(true);
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        imageView.setFitWidth(screenBounds.getWidth() * 0.8);
-        imageView.setFitHeight(screenBounds.getHeight() * 0.8);
+        imageView.setFitWidth(screenBounds.getWidth() * .9);
+        imageView.setFitHeight(screenBounds.getHeight() * 0.9);
 
         // Load the images
         loadImages(directoryPath);

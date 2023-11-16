@@ -109,10 +109,46 @@ public class Main extends Application {
         articleCaterogiesList.setAlignment(Pos.CENTER);
         articleSectionOfPage.setSpacing(10);
 
+        //TODO: Add seperateor line between articles and about ceo
 
 
 
+        // Section about berskrhire Hathaway in HBox for Photo, Vbox for label and paragraph
 
+
+        HBox aboutUsSection = new HBox();
+        aboutUsSection.setMinWidth(800);
+        aboutUsSection.setMinHeight(250);
+        aboutUsSection.setMaxWidth(800);
+        aboutUsSection.setMaxHeight(250);
+
+        Label ceoHeadline = new Label("About our Ceo");
+        Label ceoInfo = new Label(
+                "Warren Buffett, born on August 30, 1930, in Omaha, Nebraska, is\n" +
+                        " a renowned American businessman and philanthropist, often hailed \n" +
+                        "as the most successful investor of the 20th and early 21st centuries\n" +
+                        ". His journey began with a Bachelor of Science from the University of Nebraska\n" +
+                " in 1950 and a Master of Science from Columbia University's School \n" +
+                "of Business in 1951. In 1956, Buffett returned to Omaha and in 1965\n" +
+                " gained majority control of Berkshire Hathaway Inc., a textile manufacturer \n" +
+                "at the time. He transformed it into his primary investment vehicle, achieving\n" +
+                " an exceptional annual gain of about 28% in Berkshire Hathaway’s publicly traded \n" +
+                "shares, compared to the 11% average of major stock indices. \n");
+        VBox aboutCeoBox = new VBox(ceoHeadline, ceoInfo);
+        aboutCeoBox.setSpacing(10);
+
+        ImageView ceoImage= new ImageView(new Image("WarrenStill.png"));
+        ceoImage.setPreserveRatio(true);
+        ceoImage.fitWidthProperty().bind(aboutUsSection.widthProperty().multiply(.33));
+        ceoImage.fitHeightProperty().bind(aboutUsSection.heightProperty());
+
+
+
+        aboutUsSection.getChildren().addAll(ceoImage, aboutCeoBox);
+        aboutUsSection.setSpacing(50);
+        aboutCeoBox.setAlignment(Pos.TOP_CENTER);
+        aboutUsSection.setStyle("-fx-background-color: 'E9ECEF'");
+        // This is the end of the about us secion
 
 
 
@@ -120,7 +156,7 @@ public class Main extends Application {
 
 
         // Contains all other boxes
-        VBox rootBox = new VBox(rootImageContainer, articleSectionOfPage);
+        VBox rootBox = new VBox(rootImageContainer, articleSectionOfPage, aboutUsSection);
         rootImageContainer.setAlignment(Pos.TOP_CENTER);
         currentArticlesPane.setAlignment(Pos.CENTER);
         rootBox.setFillWidth(true);
@@ -129,12 +165,12 @@ public class Main extends Application {
         pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        rootBox.setSpacing(20);
+        rootBox.setSpacing(50);
         Scene scene = new Scene(pane, 802, 810);
         scene.getStylesheets().add("websiteStyles.css");
 
         // Create a KeyFrame with a duration of 10 seconds
-        KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(7), event -> updateUI());
+        KeyFrame tenSecondKeyFrame = new KeyFrame(Duration.seconds(6), event -> updateUI());
 
         // Create a Timeline with the KeyFrame and set it to repeat indefinitely
         Timeline tenSecondCycle = new Timeline(tenSecondKeyFrame);
