@@ -112,7 +112,6 @@ public class Main extends Application {
         //TODO: Add seperateor line between articles and about ceo
 
 
-
         // Section about berskrhire Hathaway in HBox for Photo, Vbox for label and paragraph
 
 
@@ -122,7 +121,10 @@ public class Main extends Application {
         aboutUsSection.setMaxWidth(800);
         aboutUsSection.setMaxHeight(250);
 
+
+        //TODO: Add fonts and styling to the labels, center them better toward the bottom middle of current located
         Label ceoHeadline = new Label("About our Ceo");
+        ceoHeadline.setStyle("-fx-font-size:20;");
         Label ceoInfo = new Label(
                 "Warren Buffett, born on August 30, 1930, in Omaha, Nebraska, is\n" +
                         " a renowned American businessman and philanthropist, often hailed \n" +
