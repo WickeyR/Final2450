@@ -29,24 +29,67 @@ public class ArticleSection extends GridPane {
     }
 
     public void setArticles(){
-        ArticleContainer articleOne, articleTwo, articleThree, articleFour;
+        // Initialize the containers first so that they can be set
+        // Add all other cases-and actions
+        ArticleImageContainer articleOne, articleTwo, articleThree, articleFour;
         HBox articleOneContainer, articleTwoContainer, articleThreeContainer, articleFourContainer;
         switch (articleCategoryNum){
             case 1:
-                articleOne = new ArticleContainer(new Image("news.png"), "General News Release", "Nov 4, 2023", "Resources/ArticleImages/NewsArticles/Nov4News");
+                articleOne = new ArticleImageContainer(new Image("news.png"), "General News Release", "Nov 4, 2023", "Resources/ArticleImages/NewsArticles/Nov4News");
                 articleOneContainer = articleOne.setContainerBehavior();
-                articleTwo = new ArticleContainer(new Image("news.png"), "Third Quarter News Release", "Nov 2, 2023", "Resources/ArticleImages/NewsArticles/Nov2News");
+                articleTwo = new ArticleImageContainer(new Image("Q3.png"), "Third Quarter News Release", "Nov 2, 2023", "Resources/ArticleImages/NewsArticles/Nov2News");
                 articleTwoContainer = articleTwo.setContainerBehavior();
-                articleThree  = new ArticleContainer(new Image("news.png"), "General News Release", "Aug 5, 2023", "Resources/ArticleImages/NewsArticles/Aug5News");
+                articleThree  = new ArticleImageContainer(new Image("news.png"), "General News Release", "Aug 5, 2023", "Resources/ArticleImages/NewsArticles/Aug5News");
                 articleThreeContainer = articleThree.setContainerBehavior();
-                articleFour = new ArticleContainer(new Image("news.png"), "Second Quarter News Release", "Aug 3, 2023", "Resources/ArticleImages/NewsArticles/Aug3News");
+                articleFour = new ArticleImageContainer(new Image("Q2.png"), "Second Quarter News Release", "Aug 3, 2023", "Resources/ArticleImages/NewsArticles/Aug3News");
                 articleFourContainer = articleFour.setContainerBehavior();
-
                 articleSectionPane.add(articleOneContainer, 0, 0);
                 articleSectionPane.add(articleTwoContainer, 1,0);
                 articleSectionPane.add(articleThreeContainer, 0,1);
                 articleSectionPane.add(articleFourContainer, 1,1);
-
+                break;
+            case 2:
+                articleOne = new ArticleImageContainer(new Image("news.png"), "First sustainability", "Nov 4, 2023", "Resources/ArticleImages/NewsArticles/Nov4News");
+                articleOneContainer = articleOne.setContainerBehavior();
+                articleTwo = new ArticleImageContainer(new Image("news.png"), "Second sustainability", "Nov 2, 2023", "Resources/ArticleImages/NewsArticles/Nov2News");
+                articleTwoContainer = articleTwo.setContainerBehavior();
+                articleThree  = new ArticleImageContainer(new Image("news.png"), "General News Release", "Aug 5, 2023", "Resources/ArticleImages/NewsArticles/Aug5News");
+                articleThreeContainer = articleThree.setContainerBehavior();
+                articleFour = new ArticleImageContainer(new Image("news.png"), "Second Quarter News Release", "Aug 3, 2023", "Resources/ArticleImages/NewsArticles/Aug3News");
+                articleFourContainer = articleFour.setContainerBehavior();
+                articleSectionPane.add(articleOneContainer, 0, 0);
+                articleSectionPane.add(articleTwoContainer, 1,0);
+                articleSectionPane.add(articleThreeContainer, 0,1);
+                articleSectionPane.add(articleFourContainer, 1,1);
+                break;
+            case 3:
+                articleOne = new ArticleImageContainer(new Image("Q3.png"), "Third Quarter Report", "Sep 20 2023", "Resources/ArticleImages/MeetingReportArticles/ThirdQuarterReport");
+                articleOneContainer = articleOne.setContainerBehavior();
+                articleTwo = new ArticleImageContainer(new Image("Q2.png"), "Second Quarter Report", "June 30, 2023", "Resources/ArticleImages/MeetingReportArticles/SecondQuarterReport");
+                articleTwoContainer = articleTwo.setContainerBehavior();
+                articleThree  = new ArticleImageContainer(new Image("Q1.png"), "FirstQuarterReport", "March 31, 2023", "Resources/ArticleImages/MeetingReportArticles/FirstQuarterReport");
+                articleThreeContainer = articleThree.setContainerBehavior();
+                articleFour = new ArticleImageContainer(new Image("Q4.png"), "Annual Report", "2022", "Resources/ArticleImages/MeetingReportArticles/AnnualReport");
+                articleFourContainer = articleFour.setContainerBehavior();
+                articleSectionPane.add(articleOneContainer, 0, 0);
+                articleSectionPane.add(articleTwoContainer, 1,0);
+                articleSectionPane.add(articleThreeContainer, 0,1);
+                articleSectionPane.add(articleFourContainer, 1,1);
+                break;
+            case 4:
+                articleOne = new ArticleImageContainer(new Image("news.png"), "Comparative Rights", "June 20, 2010", "Resources/ArticleImages/StockHolderArticles/ComparativeRights");
+                articleOneContainer = articleOne.setContainerBehavior();
+                articleTwo = new ArticleImageContainer(new Image("news.png"), "Energy Presentation", "Nov 2022", "Resources/ArticleImages/StockHolderArticles/EnergyPresentation");
+                articleTwoContainer = articleTwo.setContainerBehavior();
+                articleThree  = new ArticleImageContainer(new Image("news.png"), "Investment Information", "Feb 17, 2022", "Resources/ArticleImages/StockHolderArticles/InvestmentFacts");
+                articleThreeContainer = articleThree.setContainerBehavior();
+                articleFour = new ArticleImageContainer(new Image("news.png"), "Stock Holder Info", "2022", "Resources/ArticleImages/StockHolderArticles/StockHolderInfo");
+                articleFourContainer = articleFour.setContainerBehavior();
+                articleSectionPane.add(articleOneContainer, 0, 0);
+                articleSectionPane.add(articleTwoContainer, 1,0);
+                articleSectionPane.add(articleThreeContainer, 0,1);
+                articleSectionPane.add(articleFourContainer, 1,1);
+                break;
         }
     }
 
