@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
+
 public class ArticleImageContainer extends HBox {
 
     ImageView articleImage;
@@ -17,7 +19,6 @@ public class ArticleImageContainer extends HBox {
     Label articleDateLabel;
     String articleFilePath;
     HBox articleHbox;
-    PdfReaderWindow window = new PdfReaderWindow();
     public ArticleImageContainer(Image articleThumbnail, String articleName, String date, String articleFilePath){
          this.articleImage = new ImageView(articleThumbnail);
          this.articleNameLabel = new Label(articleName);
@@ -41,7 +42,7 @@ public class ArticleImageContainer extends HBox {
         VBox articleInfoBox = new VBox(articleNameLabel, articleDateLabel);
         articleInfoBox.setAlignment(Pos.CENTER);
         this.articleHbox = new HBox(articleImage, articleInfoBox);
-        articleHbox.setOnMouseClicked(event -> window.openNewWindow(articleFilePath));
+        articleHbox.setOnMouseClicked(event -> Main.openFile(new File(this.articleFilePath)));
         articleHbox.setOnMouseEntered(event -> scaleButton(articleHbox));
         articleHbox.setOnMouseExited(event -> descaleButton(articleHbox));
 

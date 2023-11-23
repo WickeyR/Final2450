@@ -3,7 +3,7 @@
 }
 
 .menu-bar .label {
-	-fx-font-size: 16;
+	-fx-font-size: 17;
 	-fx-text-fill: white;
 }
 
@@ -15,7 +15,7 @@
 	-fx-background-color: rgba(60,60,60, 0.1);
 	-fx-text-fill: white;
 	-fx-underline: true;
-	-fx-font-size: 30;
+	-fx-font-size: 35;
 }
 
 .action-button {

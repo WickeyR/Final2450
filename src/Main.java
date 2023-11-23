@@ -1,32 +1,39 @@
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.*;
+import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.*;
 
-import javax.sound.sampled.Line;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class Main extends Application {
     InvestWithUsPage investWithUsPage = new InvestWithUsPage();
-
-
     Label selectedCategoryLabel;
-    ArticleSection currentContainer;
-
     HBox articleCaterogiesList;
-    HBox currentArticleCategoryBox = new HBox();
     Separator seperator = new Separator();
     Separator separator2 = new Separator();
+    Separator seperator3 = new Separator();
     GridPane currentArticlesPane;
-    Label currentArticleCategoryLabel  = new Label("News Reports");
-    private final Label currentPageLabel = new Label("Page: 0");
     private int photoNum = 0;
     // The Quote that will be updated every 10 seconds
     private final Label quoteLabel = new Label("Invest with Wisdom, Grow with Purpose");
@@ -40,6 +47,8 @@ public class Main extends Application {
         seperator.prefWidthProperty().bind(stage.widthProperty().multiply(0.75));
         separator2.setOrientation(Orientation.HORIZONTAL);
         separator2.prefWidthProperty().bind(stage.widthProperty().multiply(0.75));
+        seperator3.setOrientation(Orientation.HORIZONTAL);
+        seperator3.prefWidthProperty().bind(stage.widthProperty().multiply(0.75));
 
         // Loads first image
         updateUI();
@@ -53,13 +62,15 @@ public class Main extends Application {
         Menu contactUsMenu = new Menu("Contact Us");
         //contactUsMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
         contactUsMenu.getStyleClass().add("menu-bar-label");
+        MenuItem contactUsItem = new MenuItem();
+        contactUsItem.setVisible(true); // Making it invisible
+        contactUsMenu.getItems().add(contactUsItem);
         
         // Used to serve as spacing between Two menu items
-        Menu emptySpacing = new Menu("                                                   " +
-                "                                                                             " +
-                "                                                                              " +
-                "                                                                              " +
-
+        Menu emptySpacing = new Menu("                                                  " +
+                "                                                                          " +
+                "                                                                          " +
+                "                                                                " +
                 "                                                                 ");
         emptySpacing.setDisable(true);
         topBar.getMenus().addAll(logoMenu,emptySpacing, contactUsMenu);
@@ -73,7 +84,6 @@ public class Main extends Application {
         shadow.setColor(Color.BLACK);
         quoteLabel.setEffect(shadow);
         actionButton.setEffect(shadow);
-
 
         // Places text and button in vbox for spacing and alignment
         VBox quoteAndButtonBox = new VBox(quoteLabel, actionButton);
@@ -92,7 +102,6 @@ public class Main extends Application {
         rootImageContainer.setMinSize(1465,650);
         topBar.getStyleClass().add("top-bar");
 
-
         //Sets the styling for the Quote label
         quoteLabel.getStyleClass().add("quote-label");
 
@@ -105,10 +114,6 @@ public class Main extends Application {
         // To revert to normal when not hovered
         actionButton.setOnMouseExited(event -> actionButton.getStyleClass().add("action-button"));
 
-        // This is the end of the Image pane
-
-
-        //
         Label newsLabel = new Label("News");
         //News Label is selected by default
         this.selectedCategoryLabel = newsLabel;
@@ -125,7 +130,6 @@ public class Main extends Application {
         articleCaterogiesList.setAlignment(Pos.CENTER);
         articleCaterogiesList.setSpacing(30);
 
-
         ArticleSection container = new ArticleSection(1);
         currentArticlesPane = container.getGridPane();
 
@@ -135,29 +139,21 @@ public class Main extends Application {
         meetingsLabel.setOnMouseClicked(event -> setupCategoryLabel(meetingsLabel, 3));
         stockHolderLabel.setOnMouseClicked(event -> setupCategoryLabel(stockHolderLabel, 4));
 
-
         VBox articleSectionOfPage = new VBox(articleCaterogiesList, currentArticlesPane);
-        articleSectionOfPage.setAlignment(Pos.CENTER);
         articleCaterogiesList.setAlignment(Pos.CENTER);
-        articleSectionOfPage.setSpacing(10);
+        articleSectionOfPage.setAlignment(Pos.CENTER);
 
-        //TODO: Add seperateor Styles
         HBox separatorBox = new HBox(seperator);
+        separatorBox.setPrefWidth(1465);
         separatorBox.setAlignment(Pos.CENTER);
 
         HBox separator2Box = new HBox(separator2);
+        separator2Box.setPrefWidth(1465);
         separator2Box.setAlignment(Pos.CENTER);
 
-
-
-
-
-
-
-
-        // Section about berskrhire Hathaway in HBox for Photo, Vbox for label and paragraph
-
-
+        HBox separator3Box = new HBox(seperator3);
+        separator3Box.setPrefWidth(1465);
+        separator3Box.setAlignment(Pos.CENTER);
 
 
         HBox aboutUsSection = new HBox();
@@ -166,8 +162,6 @@ public class Main extends Application {
         aboutUsSection.setMaxWidth(1465);
         aboutUsSection.setMaxHeight(500);
 
-
-        //TODO: Add fonts and styling to the labels, center them better toward the bottom middle of current located
         Label ceoHeadline = new Label("About our Ceo");
         ceoHeadline.setStyle("-fx-font-size:25;");
         Label ceoInfo = new Label(
@@ -197,12 +191,10 @@ public class Main extends Application {
         aboutCeoBox.setSpacing(10);
         aboutCeoBox.setPadding(new Insets(25, 0,0,0));
 
-        ImageView ceoImage= new ImageView(new Image("WarrenStill.png"));
+        ImageView ceoImage= new ImageView(new Image("ArticleThumbnails/WarrenStill.png"));
         ceoImage.setPreserveRatio(true);
         ceoImage.fitWidthProperty().bind(aboutUsSection.widthProperty().multiply(.4));
         ceoImage.fitHeightProperty().bind(aboutUsSection.heightProperty());
-
-
 
         aboutUsSection.getChildren().addAll(ceoImage, aboutCeoBox);
         aboutUsSection.setSpacing(125);
@@ -210,13 +202,111 @@ public class Main extends Application {
         aboutUsSection.setStyle("-fx-background-color: 'E9ECEF'");
         // This is the end of the about us secion
 
+        // AFFILIATED COMPANIES SECTION
+        Label affilatedBrandsLabel = new Label("Some of our Subsidiary Companies");
+        affilatedBrandsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25; ");
+        Pane animationPane = new Pane();
+        LogoAnimation.SetAnimation(animationPane);
+        animationPane.setMaxWidth(1465);
 
+        VBox affiliatedBrandsSection = new VBox(affilatedBrandsLabel, animationPane);
+        affiliatedBrandsSection.setAlignment(Pos.TOP_CENTER);
+        affiliatedBrandsSection.setSpacing(20);
+        // END OF THE AFFILIATED
+
+        GridPane moreInfoSection = new GridPane();
+        moreInfoSection.setStyle("-fx-background-color: '#343A40'; -fx-font-size: 14;");
+        moreInfoSection.setPadding(new Insets(40, 100, 40, 100));
+        moreInfoSection.setVgap(30); // Vertical gap between rows
+        moreInfoSection.setHgap(60); // Horizontal gap between columns
+
+// Contact Information
+        Label contactUsLabel = new Label("Contact Us:");
+        contactUsLabel.setStyle("-fx-font-size: 14; -fx-text-fill:'F8F9FA' ;-fx-font-weight: bold;");
+        Hyperlink emailLink = new Hyperlink("berkshire@berkshirehathaway.com");
+        emailLink.setOnMouseClicked(event -> openEmail());
+        emailLink.setStyle("-fx-text-fill: '#F8F9FA'; -fx-underline: true;");
+
+        Text contactText1 = new Text(
+                "Phone: (848) 932-7889\n" +
+                "Email: ");
+        contactText1.setFill(Color.web("#F8F9FA"));
+
+        Text contactText2 = new Text("\nOffice Hours: 8am - 5pm Mo-Fr");
+        contactText2.setFill(Color.web("#F8F9FA"));
+
+        TextFlow contactUsTextFlow = new TextFlow(contactText1, emailLink, contactText2);
+        VBox contactUsBox = new VBox(contactUsLabel, contactUsTextFlow);
+        contactUsBox.setSpacing(10);
+        contactUsTextFlow.setLineSpacing(3);
+
+        moreInfoSection.add(contactUsBox, 0, 0); // Adjust the position as needed
+
+// Corporate Office
+        Label coporateOfficeHeaderLabel = new Label("Corporate Office; ");
+        coporateOfficeHeaderLabel.setStyle("-fx-font-size: 14; -fx-text-fill:'F8F9FA' ;-fx-font-weight: bold;");
+
+        Label corporateOfficeinfoLabel = new Label(
+                        "Address: 3555 Farnam Street, Omaha, NE 68131"
+        );
+        corporateOfficeinfoLabel.setStyle("-fx-text-fill: '#F8F9FA';");
+        corporateOfficeinfoLabel.setLineSpacing(3);
+        VBox corperateOfficeBox = new VBox(coporateOfficeHeaderLabel, corporateOfficeinfoLabel);
+        corperateOfficeBox.setSpacing(10);
+        moreInfoSection.add(corperateOfficeBox, 1, 0); // Adding to column 1, row 0
+
+// Investor Relations
+        Label investorRelationsLabel = new Label("Investor Relations: ");
+        investorRelationsLabel.setStyle("-fx-font-size: 14; -fx-text-fill:'F8F9FA' ;-fx-font-weight: bold;");
+        Hyperlink secLink = new Hyperlink("www.sec.gov");
+        secLink.setOnMouseClicked(event -> openWebpage(secLink.getText()));
+        secLink.setStyle("-fx-text-fill: '#F8F9FA'; -fx-underline: true;");
+
+        Hyperlink annualMeetingLink = new Hyperlink("https://www.berkshirehathaway.com/reports.html");
+        annualMeetingLink.setOnMouseClicked(event -> openWebpage(annualMeetingLink.getText()));
+        annualMeetingLink.setStyle("-fx-text-fill: '#F8F9FA'; -fx-underline: true;");
+
+        Text investorText1 = new Text(
+                "SEC Filings: ");
+        investorText1.setFill(Color.web("#F8F9FA"));
+
+        Text investorText2 = new Text("\nAnnual Reports: ");
+        investorText2.setFill(Color.web("#F8F9FA"));
+
+        TextFlow investorRelationTextFlow = new TextFlow(investorText1, secLink, investorText2, annualMeetingLink);
+        VBox investorRelationBox = new VBox(investorRelationsLabel, investorRelationTextFlow);
+        investorRelationBox.setSpacing(10);
+        moreInfoSection.add(investorRelationBox, 0, 1); // Adding to column 0, row 1
+
+// Social Media
+        Label socialMediaLabel = new Label("Social Media");
+        socialMediaLabel.setStyle("-fx-font-size: 14; -fx-text-fill:'F8F9FA' ;-fx-font-weight: bold;");
+
+        Label socialMediaLinks = new Label("Twitter, Facebook, YouTube, StockTwits, Financial Juice, LinkedIn");
+        socialMediaLinks.setStyle("-fx-text-fill: '#F8F9FA';");
+        VBox socialMediaBox = new VBox(socialMediaLabel, socialMediaLinks);
+        socialMediaBox.setSpacing(10);
+        moreInfoSection.add(socialMediaBox, 1, 1); // Adding to column 1, row 1
+
+// Legal
+        Label legalLabel = new Label("Legal: ");
+        legalLabel.setStyle("-fx-font-size: 14; -fx-text-fill:'F8F9FA' ;-fx-font-weight: bold;");
+        Hyperlink legalLink = new Hyperlink("https://www.bhhs.com/privacy-policy");
+        legalLink.setOnMouseClicked(event -> openWebpage(legalLink.getText()));
+        legalLink.setStyle("-fx-text-fill: '#F8F9FA'; -fx-underline: true;");
+        Text legalText1 = new Text("Privacy Policy: ");
+        legalText1.setFill(Color.web("#F8F9FA"));
+
+        TextFlow legalLinkText = new TextFlow(legalText1, legalLink);
+        VBox legalBox = new VBox(legalLabel, legalLinkText);
+        legalBox.setSpacing(10);
+        moreInfoSection.add(legalBox, 2, 0); // Adding to column 2, row 0
 
 
 
 
         // Contains all other boxes
-        VBox rootBox = new VBox(rootImageContainer, articleSectionOfPage,separatorBox, aboutUsSection, separator2Box);
+        VBox rootBox = new VBox(rootImageContainer, articleSectionOfPage,separatorBox, aboutUsSection, separator2Box, affiliatedBrandsSection,separator3Box, moreInfoSection);
         rootImageContainer.setAlignment(Pos.TOP_CENTER);
         currentArticlesPane.setAlignment(Pos.CENTER);
         rootBox.setFillWidth(true);
@@ -224,9 +314,11 @@ public class Main extends Application {
         pane.setContent(rootBox);
         pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        //Scrolls to bottom when clicked
+        contactUsMenu.setOnShowing(e -> pane.setVvalue(1.0)); // Scroll to the bottom when menu is clicked
 
         rootBox.setSpacing(35);
-        Scene scene = new Scene(pane, 1920, 1080);
+        Scene scene = new Scene(pane, 1465, 1080);
         scene.getStylesheets().add("websiteStyles.css");
 
         // Create a KeyFrame with a duration of 10 seconds
@@ -240,15 +332,12 @@ public class Main extends Application {
 
         stage.setTitle("Berkshire Hathaway");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
-
     public static void main(String[] args) {
         launch();
     }
-
-
-
 
     private void updateUI() {
         FadeTransition fadeAnimation = new FadeTransition(Duration.millis(500), imageContainer);
@@ -261,21 +350,24 @@ public class Main extends Application {
                 setBackgroundImage(imageContainer, image1);
                 quoteLabel.setText("Read Warren Buffets Annual Letter");
                 actionButton.setText("Click Here");
+                actionButton.setOnMouseClicked(event -> openFile(new File("src/PdfPaths/WarrenBuffetLetter.pdf")));
                 break;
             }
             case 1 -> {
-                Image image2 = new Image("FadingHeadlineImages/PicB.png");
+                Image image2 = new Image("FadingHeadlineImages/familyInspiring.png");
                 setBackgroundImage(imageContainer, image2);
                 quoteLabel.setText("Invest with Wisdom, Grow with Purpose");
                 actionButton.setText("Invest With Us");
-                actionButton.setOnAction(event -> investWithUsPage.openNewPage());
+                actionButton.setOnMouseClicked(event -> investWithUsPage.openNewPage());
                 break;
             }
             case 2 -> {
-                Image image3 = new Image("FadingHeadlineImages/PicC.png");
+                Image image3 = new Image("FadingHeadlineImages/merchBackground.png");
                 setBackgroundImage(imageContainer, image3);
-                quoteLabel.setText("Read our Quarterly Reports");
+                quoteLabel.setText("Visit our Merchandise Website");
                 actionButton.setText("Click Here");
+                Hyperlink merchLink = new Hyperlink("https://berkshirewear.com/");
+                actionButton.setOnMouseClicked(event -> openWebpage(merchLink.getText()));
                 break;
             }
         }
@@ -288,7 +380,6 @@ public class Main extends Application {
         fadeAnimation.setToValue(1);
         fadeAnimation.play();
     }
-
     private void setBackgroundImage(StackPane pane, Image image) {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(image,
@@ -345,6 +436,40 @@ public class Main extends Application {
         currentArticlesPane.getChildren().clear(); // Clear existing content
         currentArticlesPane.getChildren().addAll(newContainer.getGridPane().getChildren()); // Add new content
     }
+    private void openWebpage(String url){
+        if(Desktop.isDesktopSupported()){
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    private void openEmail(){
+        if (Desktop.isDesktopSupported()){
+            File file = new File("file.pdf");
+            try {
+                Desktop.getDesktop().mail(new URI("mailto:berkshire@berkshirehathaway.com?subject=Inquiry"));
 
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public static void openFile(File file){
+        if (Desktop.isDesktopSupported()) {
+            try {
 
+                if (file.exists()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    System.err.println("File does not exist at path: " + file.getAbsolutePath());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
