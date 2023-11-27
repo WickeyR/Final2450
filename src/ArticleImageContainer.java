@@ -28,11 +28,11 @@ public class ArticleImageContainer extends HBox {
     private void setContainerStyling(HBox box){
         box.setStyle("-fx-border-width: 2px; -fx-border-color: black;");
         articleNameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13;");
-        box.setMaxWidth(350);
+        box.setMaxWidth(400);
         box.setMaxHeight(200);
         box.setMinHeight(100);
-        box.setMinWidth(350);
-        box.setSpacing(25);
+        box.setMinWidth(400);
+        box.setSpacing(30);
         articleImage.fitWidthProperty().bind(articleHbox.widthProperty().multiply(.45));
         articleImage.fitHeightProperty().bind(articleHbox.heightProperty());
         articleImage.setPreserveRatio(true);

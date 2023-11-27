@@ -53,3 +53,28 @@
     -fx-border-color: grey;
     -fx-border-width: 2px;
 }
+
+.connect-button {
+	-fx-border-width: 2;
+	-fx-border-color: white;
+	-fx-border-radius: 10;
+	-fx-background-radius: 10;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+	-fx-text-fill: black;
+	-fx-background-color: white;
+	-fx-font-size: 14;
+}
+
+.connect-button:hover {
+    -fx-border-width: 2;
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-color: black;
+	-fx-font-size: 14;
+
+}

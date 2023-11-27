@@ -1,5 +1,6 @@
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
 import javafx.scene.*;
@@ -12,9 +13,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -33,6 +36,7 @@ public class Main extends Application {
     Separator seperator = new Separator();
     Separator separator2 = new Separator();
     Separator seperator3 = new Separator();
+    Separator separator4 = new Separator();
     GridPane currentArticlesPane;
     private int photoNum = 0;
     // The Quote that will be updated every 10 seconds
@@ -41,6 +45,8 @@ public class Main extends Application {
     // The Button that goes along with the change
     private final Button actionButton = new Button("");
     StackPane imageContainer = new StackPane();
+    private EventHandler<MouseEvent> mouseEventEventHandler;
+
     @Override
     public void start(Stage stage) {
         seperator.setOrientation(Orientation.HORIZONTAL);
@@ -49,11 +55,16 @@ public class Main extends Application {
         separator2.prefWidthProperty().bind(stage.widthProperty().multiply(0.75));
         seperator3.setOrientation(Orientation.HORIZONTAL);
         seperator3.prefWidthProperty().bind(stage.widthProperty().multiply(0.75));
+        separator4.setOrientation(Orientation.HORIZONTAL);
+        separator4.prefWidthProperty().bind(stage.widthProperty().multiply(0.75));
 
         // Loads first image
         updateUI();
-        // To make the menu bar at the top and adds styles
+
+
+
         MenuBar topBar = new MenuBar();
+
 
         Menu logoMenu = new Menu("Berkshire Hathaway");
         //logoMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
@@ -65,7 +76,7 @@ public class Main extends Application {
         MenuItem contactUsItem = new MenuItem();
         contactUsItem.setVisible(true); // Making it invisible
         contactUsMenu.getItems().add(contactUsItem);
-        
+
         // Used to serve as spacing between Two menu items
         Menu emptySpacing = new Menu("                                                  " +
                 "                                                                          " +
@@ -75,6 +86,9 @@ public class Main extends Application {
         emptySpacing.setDisable(true);
         topBar.getMenus().addAll(logoMenu,emptySpacing, contactUsMenu);
         topBar.setPadding(new Insets(7, 15, 7, 15));
+
+
+        //TODO:
 
         // Adds shadow effect to text and button
         DropShadow shadow = new DropShadow();
@@ -142,6 +156,7 @@ public class Main extends Application {
         VBox articleSectionOfPage = new VBox(articleCaterogiesList, currentArticlesPane);
         articleCaterogiesList.setAlignment(Pos.CENTER);
         articleSectionOfPage.setAlignment(Pos.CENTER);
+        articleSectionOfPage.setSpacing(20);
 
         HBox separatorBox = new HBox(seperator);
         separatorBox.setPrefWidth(1465);
@@ -154,6 +169,13 @@ public class Main extends Application {
         HBox separator3Box = new HBox(seperator3);
         separator3Box.setPrefWidth(1465);
         separator3Box.setAlignment(Pos.CENTER);
+
+        HBox separator4Box = new HBox(separator4);
+        separator4Box.setPrefWidth(1465);
+        separator4Box.setAlignment(Pos.CENTER);
+
+
+
 
 
         HBox aboutUsSection = new HBox();
@@ -188,6 +210,7 @@ public class Main extends Application {
         ceoInfo.setLineSpacing(2);
 
         VBox aboutCeoBox = new VBox(ceoHeadline, ceoInfo);
+        ceoInfo.setTextAlignment(TextAlignment.CENTER);
         aboutCeoBox.setSpacing(10);
         aboutCeoBox.setPadding(new Insets(25, 0,0,0));
 
@@ -214,6 +237,63 @@ public class Main extends Application {
         affiliatedBrandsSection.setSpacing(20);
         // END OF THE AFFILIATED
 
+        Label investLabelTitle = new Label("Why Invest with Berkshire Hathaway?");
+        investLabelTitle.setStyle("-fx-font-size: 25;");
+        investLabelTitle.setAlignment(Pos.CENTER); // Center alignment for the title
+        investLabelTitle.setMaxWidth(Double.MAX_VALUE); // Allow the label to expand
+        Label investLabelContent = new Label(
+                "Berkshire Hathaway, under the legendary leadership of Warren Buffett, has established itself as a\n " +
+                "titan in the investment world. This conglomerate's success story is built on a foundation of \n" +
+                "diversified investments and a strong emphasis on long-term value creation. Investing with Berkshire \n" +
+                "Hathaway means aligning with a company that has a proven track record of outperforming the market.\n" +
+                " Their approach, focusing on acquiring undervalued companies with strong potential for growth and\n " +
+                "meticulously managed reinvestments, has consistently delivered superior returns to shareholders.\n" +
+                "\n" +
+                "One of the key advantages of investing with Berkshire Hathaway is the opportunity to benefit from \n" +
+                "Buffett's investment philosophy. Known as the 'Oracle of Omaha', Buffett's strategy of picking stocks \n" +
+                "with strong fundamentals and holding onto them for the long term has become a blueprint for success in\n" +
+                " the investment world. Additionally, Berkshire Hathaway’s portfolio includes a mix of high-performing\n" +
+                " companies across various industries, from insurance and energy to technology and consumer goods,\n" +
+                " providing investors with a balanced and diversified investment option.\n" +
+                "\n");
+        investLabelContent.setStyle("-fx-font-size: 16;");
+        investLabelContent.setLineSpacing(2);
+        investLabelContent.setTextAlignment(TextAlignment.CENTER); // Center alignment for the content text
+        investLabelContent.setMaxWidth(Double.MAX_VALUE);
+
+        Button connectWithUsButton = new Button("Connect With A Representative");
+        connectWithUsButton.setOnMouseClicked(event -> investWithUsPage.openNewPage());
+        connectWithUsButton.getStyleClass().add("connect-button");
+        connectWithUsButton.borderProperty().set(null);
+
+        // To Change properties when hovering
+        connectWithUsButton.setOnMouseEntered(event ->  connectWithUsButton.getStyleClass().add("connect-button:hover"));
+        // To revert to normal when not hovered
+        connectWithUsButton.setOnMouseExited(event -> connectWithUsButton.getStyleClass().add("connect-button"));
+
+
+
+        VBox investWithUsBox = new VBox(10, investLabelTitle, investLabelContent, connectWithUsButton);
+        investWithUsBox.setAlignment(Pos.TOP_CENTER); // Align the VBox contents to the top center
+        investWithUsBox.setPadding(new Insets(25, 75, 25, 75));
+
+        ImageView berkshireImage = new ImageView(new Image("ArticleThumbnails/BerkshireBuilding.png"));
+        berkshireImage.setPreserveRatio(true);
+        berkshireImage.fitWidthProperty().bind(aboutUsSection.widthProperty().multiply(.4));
+        berkshireImage.fitHeightProperty().bind(aboutUsSection.heightProperty());
+
+        HBox investWithUsSectionBox = new HBox(125, investWithUsBox, berkshireImage);
+        investWithUsSectionBox.setAlignment(Pos.CENTER_LEFT); // Align the HBox contents to the center left
+        investWithUsSectionBox.setStyle("-fx-background-color: 'E9ECEF'");
+        investWithUsSectionBox.setMinWidth(1465);
+        investWithUsSectionBox.setMinHeight(500);
+        investWithUsSectionBox.setMaxWidth(1465);
+        investWithUsSectionBox.setMaxHeight(500);
+
+
+
+
+        // start of more info
         GridPane moreInfoSection = new GridPane();
         moreInfoSection.setStyle("-fx-background-color: '#343A40'; -fx-font-size: 14;");
         moreInfoSection.setPadding(new Insets(40, 100, 40, 100));
@@ -306,7 +386,7 @@ public class Main extends Application {
 
 
         // Contains all other boxes
-        VBox rootBox = new VBox(rootImageContainer, articleSectionOfPage,separatorBox, aboutUsSection, separator2Box, affiliatedBrandsSection,separator3Box, moreInfoSection);
+        VBox rootBox = new VBox(rootImageContainer, articleSectionOfPage,separatorBox, aboutUsSection, separator2Box, affiliatedBrandsSection,separator3Box, investWithUsSectionBox,separator4Box ,moreInfoSection);
         rootImageContainer.setAlignment(Pos.TOP_CENTER);
         currentArticlesPane.setAlignment(Pos.CENTER);
         rootBox.setFillWidth(true);
@@ -472,4 +552,6 @@ public class Main extends Application {
             }
         }
     }
+
+
 }

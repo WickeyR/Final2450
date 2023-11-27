@@ -1,3 +1,5 @@
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -6,8 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,48 +30,47 @@ public class InvestWithUsPage {
         Label investLabel = new Label("Invest with Berkshire Hathaway");
         investLabel.setStyle("-fx-font-size: 20; -fx-underline: 'true'; -fx-text-fill: 'F8F9FA'");
 
-        Label firstName = new Label("First Name");
-        setLabelStyling(firstName);
+        Label fullName = new Label("Enter Name");
+        setLabelStyling(fullName);
         fNameField = new TextField();
-        HBox firstNameBox = new HBox(firstName, fNameField);
-        firstNameBox.setSpacing(5);
-        firstNameBox.setAlignment(Pos.CENTER);
+        VBox fullNameBox = new VBox(fullName, fNameField);
+        fullNameBox.setSpacing(5);
+        fullNameBox.setAlignment(Pos.CENTER_LEFT);
+        fNameField.setMaxWidth(400);
+        setFieldStyling(fNameField);
 
-        Label lastName = new Label("Last");
-        setLabelStyling(lastName);
-        lNameField = new TextField();
-        HBox lastNameBox = new HBox(lastName, lNameField);
-        lastNameBox.setSpacing(5);
-        lastNameBox.setAlignment(Pos.CENTER);
-
-        HBox nameHBox = new HBox(firstNameBox, lastNameBox);
-        nameHBox.setSpacing(20);
-        nameHBox.setAlignment(Pos.CENTER);
 
         Label emailLabel = new Label("Email");
         setLabelStyling(emailLabel);
         emailField = new TextField();
         emailField.setPromptText("ex: ironMan@gmail.com");
-        HBox emailBox = new HBox(emailLabel, emailField);
+        VBox emailBox = new VBox(emailLabel, emailField);
         emailBox.setSpacing(5);
-        emailBox.setSpacing(20);
-        emailBox.setAlignment(Pos.CENTER);
+        emailBox.setAlignment(Pos.CENTER_LEFT);
+        emailField.setMaxWidth(400);
+        setFieldStyling(emailField);
 
         Label phoneNumberLabel = new Label("Phone");
         setLabelStyling(phoneNumberLabel);
         phoneNumberField = new TextField();
         phoneNumberField.setPromptText("###-###-####");
-        HBox phoneNumberBox = new HBox(phoneNumberLabel, phoneNumberField);
-        phoneNumberBox.setAlignment(Pos.CENTER);
-        phoneNumberBox.setSpacing(20);
+        VBox phoneNumberBox = new VBox(phoneNumberLabel, phoneNumberField);
+        phoneNumberBox.setAlignment(Pos.CENTER_LEFT);
+        phoneNumberBox.setSpacing(5);
+        phoneNumberField.setMaxWidth(400);
+        setFieldStyling(phoneNumberField);
+
 
         Label moreInfo = new Label("How did you find out about us?");
         setLabelStyling(moreInfo);
         ChoiceBox<String> moreInfoChoices = new ChoiceBox<>();
         moreInfoChoices.getItems().addAll("News Articles", "Through a friend/family member", "TV Commercial", "Other");
-        HBox moreInfoBox = new HBox(moreInfo, moreInfoChoices);
-        moreInfoBox.setSpacing(20);
-        moreInfoBox.setAlignment(Pos.CENTER);
+        VBox moreInfoBox = new VBox(moreInfo, moreInfoChoices);
+        moreInfoBox.setSpacing(5);
+        moreInfoBox.setAlignment(Pos.CENTER_LEFT);
+        moreInfoChoices.setMaxWidth(400);
+        moreInfoChoices.setStyle("-fx-font-size:16");
+
 
         Button submitButton = new Button("Submit");
         submitButton.setStyle("-fx-font-size: 25; -fx-background-color: 'F8F9FA'; -fx-text-fill: '212529'; -fx-border-color: '212529'; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10; -fx-focus-color: 'transparent'; -fx-faint-focus-color: 'transparent';");
@@ -85,16 +85,49 @@ public class InvestWithUsPage {
             }
         });
 
-        VBox pageContents = new VBox(headerPhoto, investLabel, nameHBox, emailBox, phoneNumberBox, moreInfoBox, submitButton);
-        pageContents.setAlignment(Pos.TOP_CENTER);
+        VBox pageContents = new VBox(investLabel, fullNameBox, emailBox, phoneNumberBox, moreInfoBox, submitButton);
+        pageContents.setMaxHeight(600);
+        pageContents.setMaxWidth(400);
+        pageContents.setPadding(new Insets(20,50,50,50));
+        pageContents.setAlignment(Pos.TOP_CENTER); // Center alignment for the VBox itself
         investLabel.setAlignment(Pos.CENTER);
         pageContents.setSpacing(25);
-        pageContents.setStyle("-fx-background-color: '495057'");
+        pageContents.setStyle("-fx-background-color: rgba(73, 80, 87, 0.8); ");
+        investLabel.setOpacity(1);
+        fullNameBox.setOpacity(1);
+        emailBox.setOpacity(1);
+        phoneNumberBox.setOpacity(1);
+        moreInfoBox.setOpacity(1);
+        submitButton.setOpacity(1);
 
-        Scene root = new Scene(pageContents, 600, 800);
+// Your existing ImageView setup
+        ImageView citySkyline = new ImageView(new Image("citySkyline.png"));
+        citySkyline.setFitWidth(600); // Adjust as necessary
 
-        stage.setTitle("Invest with us");
+// Create and set up the GridPane
+        GridPane rootPane = new GridPane();
+        rootPane.setAlignment(Pos.CENTER); // Center the GridPane itself
+        rootPane.add(citySkyline, 0, 0); // Add the ImageView first
+        GridPane.setHgrow(citySkyline, Priority.ALWAYS); // Ensure ImageView stretches
+        GridPane.setVgrow(citySkyline, Priority.ALWAYS);
 
+// Define column and row constraints for centering
+        ColumnConstraints column = new ColumnConstraints();
+        column.setHalignment(HPos.CENTER); // Center horizontally in column
+        RowConstraints row = new RowConstraints();
+        row.setValignment(VPos.CENTER); // Center vertically in row
+
+// Add constraints to GridPane
+        rootPane.getColumnConstraints().add(column);
+        rootPane.getRowConstraints().add(row);
+
+// Add the VBox over the ImageView
+        rootPane.add(pageContents, 0, 0); // Add VBox at the same position
+
+
+
+// Create the Scene with the rootPane
+        Scene root = new Scene(rootPane);
         stage.setScene(root);
         stage.setResizable(false);
         stage.show();
@@ -103,7 +136,7 @@ public class InvestWithUsPage {
     private String validateFields() {
         StringBuilder errorMessages = new StringBuilder();
 
-        if (!areFieldsFilled(fNameField, lNameField, emailField, phoneNumberField)) {
+        if (!areFieldsFilled(fNameField, emailField, phoneNumberField)) {
             errorMessages.append("  - Fill in all fields.\n");
         }
 
@@ -145,8 +178,9 @@ public class InvestWithUsPage {
     }
 
     private void setLabelStyling(Label label) {
-        label.setStyle("-fx-font-size: 15px; -fx-text-fill: 'F8F9FA'");
+        label.setStyle("-fx-font-size: 16px; -fx-text-fill: 'F8F9FA'");
     }
+    private void setFieldStyling(TextField field){field.setStyle("-fx-font-size:16px;");}
 
     private void setNewScene(String customerName, Stage stage) {
         Label thankYouLabel = new Label("Thank You, " + customerName + "!");
