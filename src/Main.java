@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
 import javafx.scene.*;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,13 +23,13 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.*;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+//TODO: add comments to main
 public class Main extends Application {
     InvestWithUsPage investWithUsPage = new InvestWithUsPage();
     Label selectedCategoryLabel;
@@ -58,7 +59,6 @@ public class Main extends Application {
         separator4.setOrientation(Orientation.HORIZONTAL);
         separator4.prefWidthProperty().bind(stage.widthProperty().multiply(0.75));
 
-        // Loads first image
         updateUI();
 
 
@@ -67,11 +67,9 @@ public class Main extends Application {
 
 
         Menu logoMenu = new Menu("Berkshire Hathaway");
-        //logoMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
         logoMenu.getStyleClass().add("menu-bar-label");
 
         Menu contactUsMenu = new Menu("Contact Us");
-        //contactUsMenu.setStyle("-fx-text-fill: white; -fx-font-size: 14");
         contactUsMenu.getStyleClass().add("menu-bar-label");
         MenuItem contactUsItem = new MenuItem();
         contactUsItem.setVisible(true); // Making it invisible
@@ -88,7 +86,6 @@ public class Main extends Application {
         topBar.setPadding(new Insets(7, 15, 7, 15));
 
 
-        //TODO:
 
         // Adds shadow effect to text and button
         DropShadow shadow = new DropShadow();
@@ -124,9 +121,19 @@ public class Main extends Application {
         actionButton.borderProperty().set(null);
 
         // To Change properties when hovering
-        actionButton.setOnMouseEntered(event ->  actionButton.getStyleClass().add("action-button:hover"));
+        actionButton.setOnMouseEntered(event ->{
+            actionButton.setCursor(Cursor.HAND);
+            actionButton.getStyleClass().add("action-button:hover");
+        });
         // To revert to normal when not hovered
-        actionButton.setOnMouseExited(event -> actionButton.getStyleClass().add("action-button"));
+        actionButton.setOnMouseExited(event -> {
+            actionButton.setCursor(Cursor.DEFAULT);
+            actionButton.getStyleClass().add("action-button");
+        });
+
+
+        Label articleSectionLabel = new Label("Important Updates from Berkshire Hathaway");
+        articleSectionLabel.setStyle("-fx-font-size: 30; -fx-underline: true;");
 
         Label newsLabel = new Label("News");
         //News Label is selected by default
@@ -139,6 +146,7 @@ public class Main extends Application {
         setCategoryLabelStyling(meetingsLabel);
         Label stockHolderLabel = new Label("Stock Holder Info");
         setCategoryLabelStyling(stockHolderLabel);
+
 
         articleCaterogiesList = new HBox(newsLabel, sustainabilityLabel, meetingsLabel, stockHolderLabel);
         articleCaterogiesList.setAlignment(Pos.CENTER);
@@ -153,10 +161,13 @@ public class Main extends Application {
         meetingsLabel.setOnMouseClicked(event -> setupCategoryLabel(meetingsLabel, 3));
         stockHolderLabel.setOnMouseClicked(event -> setupCategoryLabel(stockHolderLabel, 4));
 
-        VBox articleSectionOfPage = new VBox(articleCaterogiesList, currentArticlesPane);
+        VBox articleSectionOfPage = new VBox(articleSectionLabel ,articleCaterogiesList, currentArticlesPane);
+        articleSectionLabel.setAlignment(Pos.TOP_RIGHT);
         articleCaterogiesList.setAlignment(Pos.CENTER);
         articleSectionOfPage.setAlignment(Pos.CENTER);
-        articleSectionOfPage.setSpacing(20);
+        articleSectionOfPage.setSpacing(25);
+
+
 
         HBox separatorBox = new HBox(seperator);
         separatorBox.setPrefWidth(1465);
@@ -267,9 +278,16 @@ public class Main extends Application {
         connectWithUsButton.borderProperty().set(null);
 
         // To Change properties when hovering
-        connectWithUsButton.setOnMouseEntered(event ->  connectWithUsButton.getStyleClass().add("connect-button:hover"));
+        connectWithUsButton.setOnMouseEntered(event -> {
+            connectWithUsButton.setCursor(Cursor.HAND);
+            connectWithUsButton.getStyleClass().add("connect-button:hover");
+                });
         // To revert to normal when not hovered
-        connectWithUsButton.setOnMouseExited(event -> connectWithUsButton.getStyleClass().add("connect-button"));
+        connectWithUsButton.setOnMouseExited(event -> {
+            connectWithUsButton.setCursor(Cursor.DEFAULT);
+            connectWithUsButton.getStyleClass().add("connect-button");
+        });
+
 
 
 
@@ -477,8 +495,12 @@ public class Main extends Application {
             categoryLabel.setStyle("-fx-font-size:20;");
 
         }
-        categoryLabel.setOnMouseEntered(event -> categoryLabel.setStyle("-fx-font-size:25; -fx-font-weight:bold;"));
+        categoryLabel.setOnMouseEntered(event -> {
+                categoryLabel.setCursor(Cursor.HAND);
+                categoryLabel.setStyle("-fx-font-size:25; -fx-font-weight:bold;");
+        });
         categoryLabel.setOnMouseExited(event -> {
+            categoryLabel.setCursor(Cursor.DEFAULT);
             if (!categoryLabel.equals(selectedCategoryLabel)) {
                 categoryLabel.setStyle("-fx-font-size:20;");
             }
@@ -516,7 +538,7 @@ public class Main extends Application {
         currentArticlesPane.getChildren().clear(); // Clear existing content
         currentArticlesPane.getChildren().addAll(newContainer.getGridPane().getChildren()); // Add new content
     }
-    private void openWebpage(String url){
+    public static void openWebpage(String url){
         if(Desktop.isDesktopSupported()){
             try {
                 Desktop.getDesktop().browse(new URI(url));

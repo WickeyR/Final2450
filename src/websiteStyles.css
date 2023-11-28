@@ -63,7 +63,7 @@
 	-fx-faint-focus-color: transparent;
 	-fx-text-fill: black;
 	-fx-background-color: white;
-	-fx-font-size: 14;
+	-fx-font-size: 16;
 }
 
 .connect-button:hover {
@@ -75,6 +75,6 @@
     -fx-faint-focus-color: transparent;
     -fx-text-fill: white;
     -fx-background-color: black;
-	-fx-font-size: 14;
+	-fx-font-size: 16;
 
 }
