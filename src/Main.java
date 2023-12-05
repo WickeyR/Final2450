@@ -135,6 +135,9 @@ public class Main extends Application {
         });
 
 
+        //-----------------------------------------IMPORTANT UPDATES SECTION-----------------------------------------------
+
+
         Label articleSectionLabel = new Label("Important Updates from Berkshire Hathaway");
         articleSectionLabel.setStyle("-fx-font-size: 30; -fx-underline: true;");
 
@@ -190,6 +193,7 @@ public class Main extends Application {
 
 
 
+        //-----------------------------------------ABOUT US SECTION-----------------------------------------------
 
 
         HBox aboutUsSection = new HBox();
@@ -239,7 +243,9 @@ public class Main extends Application {
         aboutUsSection.setStyle("-fx-background-color: 'E9ECEF'");
         // This is the end of the about us secion
 
-        // AFFILIATED COMPANIES SECTION
+
+        //-----------------------------------------AFFILIATED BRANDS SECTION-----------------------------------------------
+
         Label affilatedBrandsLabel = new Label("Some of our Subsidiary Companies");
         affilatedBrandsLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 25; ");
         Pane animationPane = new Pane();
@@ -249,7 +255,8 @@ public class Main extends Application {
         VBox affiliatedBrandsSection = new VBox(affilatedBrandsLabel, animationPane);
         affiliatedBrandsSection.setAlignment(Pos.TOP_CENTER);
         affiliatedBrandsSection.setSpacing(20);
-        // END OF THE AFFILIATED
+
+        //-----------------------------------------INVEST WITH US SECTION-----------------------------------------------
 
         Label investLabelTitle = new Label("Why Invest with Berkshire Hathaway?");
         investLabelTitle.setStyle("-fx-font-size: 25;");
@@ -311,6 +318,8 @@ public class Main extends Application {
         investWithUsSectionBox.setMaxWidth(1465);
         investWithUsSectionBox.setMaxHeight(500);
 
+
+        //-----------------------------------------FOOTER SECTION-----------------------------------------------
 
 
 
@@ -440,6 +449,7 @@ public class Main extends Application {
         launch();
     }
 
+    //updateUI: Sets the background image and text depending on current index
     private void updateUI() {
         FadeTransition fadeAnimation = new FadeTransition(Duration.millis(500), imageContainer);
         fadeAnimation.setFromValue(1.0);
@@ -481,6 +491,9 @@ public class Main extends Application {
         fadeAnimation.setToValue(1);
         fadeAnimation.play();
     }
+    //@param pane: The pane which will have its image set
+    //@param image: Tme image that will be added to the background
+    //setBackgroundImage: Sets the image of the pane and scales it to fit size
     private void setBackgroundImage(StackPane pane, Image image) {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(image,
@@ -490,6 +503,10 @@ public class Main extends Application {
         pane.setBackground(new Background(backgroundImage));
     }
 
+    /*
+    @param categoryLabel: The label representing the category
+    setCategoryLabelStyling: Sets the styling for the label depending on if selected or not
+     */
     private void setCategoryLabelStyling(Label categoryLabel) {
         if (categoryLabel == selectedCategoryLabel){
             categoryLabel.setStyle("-fx-font-size:25; -fx-font-weight:bold;" );
@@ -514,6 +531,12 @@ public class Main extends Application {
             updateCategoryStyles(); // Update styles for all labels
         });
     }
+
+    /*
+    @param label: The label which will be updated
+    @categoryNumber: The current article category
+    setUpCategoryLabel: calls the function to set the style and format correctly
+     */
      private void setupCategoryLabel(Label label, int categoryNumber) {
         setCategoryLabelStyling(label);
         label.setOnMouseClicked(event -> {
@@ -524,6 +547,9 @@ public class Main extends Application {
         });
     }
 
+    /*
+    updateCategoryStyles: Checks if label selected to update styles accordingly
+     */
     private void updateCategoryStyles() {
         // Iterate over all category labels and update their styles
         for (Node node : articleCaterogiesList.getChildren()) {
@@ -537,10 +563,19 @@ public class Main extends Application {
             }
         }
     }
+
+    /*
+    @param newContainer: The container which will have its articles updated
+    updateArticlesPane: updates the article by clearning the current contents
+     */
     private void updateArticlesPane(ArticleSection newContainer) {
         currentArticlesPane.getChildren().clear(); // Clear existing content
         currentArticlesPane.getChildren().addAll(newContainer.getGridPane().getChildren()); // Add new content
     }
+    /*
+    @param url: The url that leads to the webpage
+    openWebpage: Opens the link using the users default Web browser
+     */
     public static void openWebpage(String url){
         if(Desktop.isDesktopSupported()){
             try {
@@ -552,6 +587,9 @@ public class Main extends Application {
             }
         }
     }
+    /*
+    openEmail: Opens the default email application to email the user
+     */
     private void openEmail(){
         if (Desktop.isDesktopSupported()){
             File file = new File("file.pdf");
@@ -563,6 +601,10 @@ public class Main extends Application {
             }
         }
     }
+    /*
+    @param file: The filepath (Pdf) that will be opened
+    openFile: Used the users default pdf viewer to open the designated pdf
+     */
     public static void openFile(File file){
         if (Desktop.isDesktopSupported()) {
             try {
