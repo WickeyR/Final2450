@@ -1,4 +1,4 @@
-//Author: Ricky Franco
+//Author: Ricky Franco, Denise Thuong, Byron Wong
 //22 Nov 2023
 //LogoAnimation.java: Sets the behavior for Pane that will serve as a logo animation
 import javafx.animation.TranslateTransition;
@@ -79,7 +79,7 @@ public class LogoAnimation {
         images.setSpacing(75);
 
         // Sets the behavior of our animation, a transition from end to end, indefinitely
-        TranslateTransition boxTransition = new TranslateTransition(Duration.seconds(40), images);
+        TranslateTransition boxTransition = new TranslateTransition(Duration.seconds(30), images);
         boxTransition.setFromX(-2000);
         boxTransition.setToX(1500);
         boxTransition.setCycleCount(TranslateTransition.INDEFINITE);

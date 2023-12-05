@@ -1,3 +1,6 @@
+//Author: Ricky Franco, Denise Thuong, Byron Wong
+//15 Nov 2023
+//Main.java: The File that launches our page and calls all the necessary methods to function
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -76,14 +79,14 @@ public class Main extends Application {
         contactUsMenu.getItems().add(contactUsItem);
 
         // Used to serve as spacing between Two menu items
-        Menu emptySpacing = new Menu("                                                  " +
-                "                                                                          " +
-                "                                                                          " +
+        Menu emptySpacing = new Menu("                                              " +
+                "                                                                      " +
+                "                                                                      " +
                 "                                                                " +
                 "                                                                 ");
         emptySpacing.setDisable(true);
         topBar.getMenus().addAll(logoMenu,emptySpacing, contactUsMenu);
-        topBar.setPadding(new Insets(7, 15, 7, 15));
+        topBar.setPadding(new Insets(7, 40, 7, 40));
 
 
 

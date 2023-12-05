@@ -1,4 +1,4 @@
-//Author: Ricky Franco
+//Author: Ricky Franco, Denise Thuong, Byron Wong
 //15 Nov 2023
 //ArticleSection.java: Returns the fully formatted Grid Pane that appears as article section
 

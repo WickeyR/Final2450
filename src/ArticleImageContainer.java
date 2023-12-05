@@ -1,4 +1,4 @@
-//Author: Ricky Franco
+//Author: Ricky Franco, Denise Thuong, Byron Wong
 //15 Nov 2023
 //ArticleImageContainer.java: Class that sets behaviors and formatting for each article
 import javafx.geometry.Insets;
@@ -53,7 +53,7 @@ public class ArticleImageContainer extends HBox {
         box.setStyle("-fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: 'DEE2E6';");
         articleNameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 18;");
         articleNameLabel.setTextAlignment(TextAlignment.CENTER);
-        articleDateLabel.setStyle("-fx-font-size: 13;");
+        articleDateLabel.setStyle("-fx-font-size: 14;");
         descriptionLabel.setStyle("-fx-font-size: 15");
         descriptionLabel.setTextAlignment(TextAlignment.LEFT);
         descriptionLabel.setMaxWidth(350);

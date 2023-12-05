@@ -1,4 +1,4 @@
-//Author:
+//Author: Ricky Franco, Denise Thuong, Byron Wong
 //Nov 15 2023
 //InvestWithUsPage.java: A separate page that opens up with additional functions to act as a sign-up
 import javafx.geometry.HPos;
@@ -114,7 +114,7 @@ public class InvestWithUsPage {
         submitButton.setOpacity(1);
 
         //ImageView created with height and width set to serve as background
-        ImageView citySkyline = new ImageView(new Image("citySkyline.png"));
+        ImageView citySkyline = new ImageView(new Image("ArticleThumbnails/citySkyline.png"));
         citySkyline.setFitWidth(600); // Adjust as necessary
 
         // GridPane used to center the contents of page, adds background image and contents
