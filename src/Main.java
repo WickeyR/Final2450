@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+//This is a test 
 //TODO: add comments to main
 public class Main extends Application {
     InvestWithUsPage investWithUsPage = new InvestWithUsPage();
